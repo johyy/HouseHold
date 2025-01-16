@@ -13,6 +13,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Go to right directory
+        run: cd household-app
       - name: Install dependencies
         run: npm install
       - name: Check style       

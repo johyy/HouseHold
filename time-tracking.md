@@ -6,4 +6,5 @@
 | 15.1. | 2     | Add configurations to backend and database |
 | 16.1. | 2     | Fighting with frontend and then configuring it again with blank template |
 |       | 1     | Adding lint and pipeline skeletons |
-| =     | 6     ||
+| 21.1. | 3     | Changing backend from monolith to microservices |
+| =     | 9     ||

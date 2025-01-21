@@ -13,9 +13,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install dependencies
-        working-directory: household-server
+
+      # User Service
+      - name: Install dependencies for User Service
+        working-directory: household-server/user-service
         run: npm install
-      - name: Check style
-        working-directory: household-server
+      - name: Check style for User Service
+        working-directory: household-server/user-service
+        run: npm run lint
+
+      # Product Service
+      - name: Install dependencies for Product Service
+        working-directory: household-server/product-service
+        run: npm install
+      - name: Check style for Product Service
+        working-directory: household-server/product-service
         run: npm run lint

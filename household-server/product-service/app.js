@@ -10,7 +10,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.send('Backend works')
+    res.send('Product service works')
 })
 
 module.exports = app

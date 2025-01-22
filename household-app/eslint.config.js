@@ -1,6 +1,6 @@
-import babelParser from '@babel/eslint-parser';
-import reactPlugin from 'eslint-plugin-react';
-import reactNativePlugin from 'eslint-plugin-react-native';
+import babelParser from '@babel/eslint-parser'
+import reactPlugin from 'eslint-plugin-react'
+import reactNativePlugin from 'eslint-plugin-react-native'
 
 export default [
   {
@@ -32,4 +32,4 @@ export default [
       'no-console': 'warn',
     },
   },
-];
+]

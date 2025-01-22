@@ -7,5 +7,6 @@
 | 16.1. | 2     | Fighting with frontend and then configuring it again with blank template |
 |       | 1     | Adding lint and pipeline skeletons |
 | 21.1. | 3     | Changing backend from monolith to microservices |
-| 22.1. | 1,5   | Adding postgres cloud for reading database functionality | 
-| =     | 10,5     ||
+| 22.1. | 1,5   | Adding postgres cloud for reading database functionality |
+|       | 6     | Synchronization between mongodb and postgres with CRUD to users-table | 
+| =     | 16,5     ||

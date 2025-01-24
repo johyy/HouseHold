@@ -14,4 +14,5 @@
 | 24.1. | 1     | Adding put and delete to user_preferences | 
 |       | 2,5   | Synchronization to products-table |
 |       | 1     | Created CRUD for locations and categories |
-| =     | 26,5    ||
+|       | 1,5   | Created CRUD for products |
+| =     | 28    ||

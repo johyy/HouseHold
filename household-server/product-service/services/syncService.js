@@ -97,16 +97,23 @@ const syncChangesToPostgres = async (change) => {
           const values = []
           let index = 1
 
+          const fieldMap = {
+            updatedAt: 'updated_at',
+          }
+        
           for (const [key, value] of Object.entries(updatedFields)) {
-            updates.push(`${key} = $${index}`)
+            const columnName = fieldMap[key] || key
+            updates.push(`${columnName} = $${index}`)
             values.push(value)
             index++
           }
-  
-          updates.push(`updated_at = $${index}`)
-          values.push(new Date().toISOString())
-          index++
-  
+        
+          if (!updatedFields.updatedAt) {
+            updates.push(`updated_at = $${index}`)
+            values.push(new Date().toISOString())
+            index++
+          }
+        
           if (updates.length > 0) {
             values.push(id)
             const query = `UPDATE products SET ${updates.join(', ')} WHERE id = $${index}`
@@ -124,6 +131,6 @@ const syncChangesToPostgres = async (change) => {
     } catch (error) {
       console.error('Error syncing change to PostgreSQL:', error.message)
     }
-};
+}
 
 module.exports = syncChangesToPostgres

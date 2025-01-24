@@ -12,4 +12,5 @@
 | 23.1. | 2     | Adding JWT Atuhentication |
 |       | 3,5   | Getting user_preferences sync to work with user_id from JWT |
 | 24.1. | 1     | Adding put and delete to user_preferences | 
-| =     | 23    ||
+|       | 2,5   | Synchronization to products-table |
+| =     | 25,5    ||

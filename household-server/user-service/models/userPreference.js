@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 
 const userPreferenceSchema = new mongoose.Schema({
-    user_id: { type: String, required: true, unique: true },
+    user_id: { 
+        type: String, 
+        required: true, 
+        unique: true 
+    },
     clothing_sizes: String,
     cosmetic_preferences: String,
     notes: String,

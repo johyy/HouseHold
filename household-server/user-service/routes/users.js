@@ -1,11 +1,9 @@
 const express = require('express')
+const bcrypt = require('bcrypt')
 const router = express.Router()
-const { mongoose, postgresPool } = require('../config/databases')
-const User = mongoose.model('User', new mongoose.Schema({
-  name: String,
-  username: String,
-  password: String,
-}))
+const { postgresPool } = require('../config/databases')
+const User = require('../models/user')
+const verifyToken = require('../middlewares/auth')
 
 router.get('/', async (req, res) => {
   try {
@@ -20,7 +18,11 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
       const { name, username, password } = req.body
-      const user = new User({ name, username, password })
+
+      const saltRounds = 10
+      const passwordHash = await bcrypt.hash(password, saltRounds)
+    
+      const user = new User({ name, username, password: passwordHash })
       await user.save()
       res.status(201).json(user)
     } catch (error) {
@@ -28,21 +30,31 @@ router.post('/', async (req, res) => {
     }
   })
 
-router.put('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true })
-    if (!updatedUser) {
-      return res.status(404).json({ error: 'User not found' })
+  router.put('/:id', verifyToken, async (req, res) => {
+    try {
+      const { id } = req.params
+      const updates = { ...req.body }
+
+      if (updates.password) {
+          const saltRounds = 10
+          updates.password = await bcrypt.hash(updates.password, saltRounds)
+      }
+  
+      const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true })
+  
+      if (!updatedUser) {
+        return res.status(404).json({ error: 'User not found' })
+      }
+  
+      res.json(updatedUser)
+    } catch (error) {
+      console.error('Error updating user:', error.message)
+      res.status(500).json({ error: error.message })
     }
-    res.json(updatedUser)
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-})
+  })
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
     const { id } = req.params
     const deletedUser = await User.findByIdAndDelete(id)

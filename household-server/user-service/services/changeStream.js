@@ -4,11 +4,17 @@ const syncChangesToPostgres = require('./syncService')
 const startChangeStream = () => {
   mongoose.connection.once('open', () => {
     console.log('Listening to changes in MongoDB...')
-    const changeStream = mongoose.connection.collection('users').watch()
+    
+    const changeStreams = [
+      mongoose.connection.collection('users').watch(),
+      mongoose.connection.collection('user_preferences').watch(),
+    ]
 
-    changeStream.on('change', async (change) => {
-      console.log('Change detected:', change)
-      await syncChangesToPostgres(change)
+    changeStreams.forEach(changeStream => {
+      changeStream.on('change', async (change) => {
+        console.log('Change detected:', change)
+        await syncChangesToPostgres(change)
+      })
     })
   })
 }

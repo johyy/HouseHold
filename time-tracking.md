@@ -8,5 +8,8 @@
 |       | 1     | Adding lint and pipeline skeletons |
 | 21.1. | 3     | Changing backend from monolith to microservices |
 | 22.1. | 1,5   | Adding postgres cloud for reading database functionality |
-|       | 6     | Synchronization between mongodb and postgres with CRUD to users-table | 
-| =     | 16,5     ||
+|       | 6     | Synchronization between mongodb and postgres with CRUD to users-table |
+| 23.1. | 2     | Adding JWT Atuhentication |
+|       | 3,5   | Getting user_preferences sync to work with user_id from JWT |
+| 24.1. | 1     | Adding put and delete to user_preferences | 
+| =     | 23    ||

@@ -13,4 +13,5 @@
 |       | 3,5   | Getting user_preferences sync to work with user_id from JWT |
 | 24.1. | 1     | Adding put and delete to user_preferences | 
 |       | 2,5   | Synchronization to products-table |
-| =     | 25,5    ||
+|       | 1     | Created CRUD for locations and categories |
+| =     | 26,5    ||

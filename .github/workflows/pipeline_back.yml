@@ -21,6 +21,8 @@ jobs:
       - name: Check style for User Service
         working-directory: household-server/user-service
         run: npm run lint
+      - name: Trigger deployment
+        run: curl ${{ RENDER_DEPLOY_HOOK_USERS }}
 
       # Product Service
       - name: Install dependencies for Product Service
@@ -29,3 +31,5 @@ jobs:
       - name: Check style for Product Service
         working-directory: household-server/product-service
         run: npm run lint
+      - name: Trigger deployment
+        run: curl ${{ RENDER_DEPLOY_HOOK_PRODUCTS }}

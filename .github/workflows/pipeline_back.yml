@@ -32,4 +32,4 @@ jobs:
         working-directory: household-server/product-service
         run: npm run lint
       - name: Trigger deployment
-        run: curl ${{ secrets.RENDER_DEPLOY_HOOK_USERS }}
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK_PRODUCTS }}

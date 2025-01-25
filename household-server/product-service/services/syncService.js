@@ -3,7 +3,7 @@ const { postgresPool } = require('../config/databases')
 const syncChangesToPostgres = async (change) => {
   try {
     const { operationType, fullDocument, documentKey, updateDescription } = change
-    console.log('Received change:', change);
+    console.log('Received change:', change)
 
     if (change.ns.coll === 'categories') {
       if (operationType === 'insert') {
@@ -11,7 +11,7 @@ const syncChangesToPostgres = async (change) => {
         await postgresPool.query(
           'INSERT INTO categories (id, name, description, owner_id) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO NOTHING',
           [_id.toString(), name, description, owner_id]
-        );
+        )
         console.log('Inserted category into PostgreSQL:', fullDocument)
       } else if (operationType === 'update') {
         const { updatedFields } = updateDescription
@@ -28,9 +28,9 @@ const syncChangesToPostgres = async (change) => {
         }
 
         if (updates.length > 0) {
-          values.push(id);
+          values.push(id)
           const query = `UPDATE categories SET ${updates.join(', ')} WHERE id = $${index}`
-          await postgresPool.query(query, values);
+          await postgresPool.query(query, values)
           console.log('Updated category in PostgreSQL:', updatedFields)
         } else {
           console.warn('Update skipped: No fields to update.')
@@ -65,7 +65,7 @@ const syncChangesToPostgres = async (change) => {
         }
 
         if (updates.length > 0) {
-          values.push(id);
+          values.push(id)
           const query = `UPDATE locations SET ${updates.join(', ')} WHERE id = $${index}`
           await postgresPool.query(query, values)
           console.log('Updated location in PostgreSQL:', updatedFields)

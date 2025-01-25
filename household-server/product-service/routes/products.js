@@ -9,7 +9,7 @@ const verifyToken = require('../middlewares/auth')
 router.get('/', verifyToken, async (req, res) => {
   try {
     const userId = req.user_id
-    const query = `SELECT * FROM products WHERE user_id = $1`;
+    const query = `SELECT * FROM products WHERE user_id = $1`
     const values = [userId]
     const result = await postgresPool.query(query, values)
     
@@ -44,7 +44,7 @@ router.post('/', verifyToken, async (req, res) => {
             expiration_date,
             quantity,
             unit,
-        });
+        })
   
         await product.save()
         res.status(201).json(product)
@@ -69,7 +69,7 @@ router.put('/:id', verifyToken, async (req, res) => {
         if (!location) {
           return res.status(400).json({ error: 'Invalid location_id: Location not found.' })
         }
-        product.location_id = location_id;
+        product.location_id = location_id
       }
   
       if (category_id) {

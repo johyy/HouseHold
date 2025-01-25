@@ -7,7 +7,7 @@ const verifyToken = require('../middlewares/auth')
 router.get('/', verifyToken, async (req, res) => {
   try {
     const userId = req.user_id
-    const query = `SELECT * FROM locations WHERE owner_id IS NULL OR owner_id = $1`;
+    const query = `SELECT * FROM locations WHERE owner_id IS NULL OR owner_id = $1`
     const values = [userId]
     const result = await postgresPool.query(query, values)
     

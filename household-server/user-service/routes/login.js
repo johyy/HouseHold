@@ -1,8 +1,8 @@
 const express = require('express')
-const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { getUserByUsername } = require('../services/userService')
 const { JWT_SECRET } = require('../config/config')
+const { verifyPassword } = require('../services/passwordService')
 
 const router = express.Router()
 
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
             return res.status(404).json({ error: 'User not found.' })
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password)
+        const isPasswordValid = await verifyPassword(password, user.password)
 
         if (!isPasswordValid) {
             return res.status(401).json({ error: 'Invalid password.' })

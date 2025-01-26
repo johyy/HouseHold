@@ -14,6 +14,11 @@ module.exports = [
         __dirname: 'readonly',
         process: 'readonly',
         console: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        jest: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
       },
     },
     rules: {

@@ -1,9 +1,9 @@
 const express = require('express')
-const bcrypt = require('bcrypt')
 const router = express.Router()
 const { postgresPool } = require('../config/databases')
 const User = require('../models/user')
 const verifyToken = require('../middlewares/auth')
+const { hashPassword} = require('../services/passwordService')
 
 router.get('/', async (req, res) => {
   try {
@@ -19,8 +19,7 @@ router.post('/', async (req, res) => {
     try {
       const { name, username, password } = req.body
 
-      const saltRounds = 10
-      const passwordHash = await bcrypt.hash(password, saltRounds)
+      const passwordHash = await hashPassword(password)
     
       const user = new User({ name, username, password: passwordHash })
       await user.save()
@@ -36,8 +35,7 @@ router.post('/', async (req, res) => {
       const updates = { ...req.body }
 
       if (updates.password) {
-          const saltRounds = 10
-          updates.password = await bcrypt.hash(updates.password, saltRounds)
+          updates.password = await hashPassword(updates.password)
       }
   
       const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true })

@@ -16,4 +16,5 @@
 |       | 1     | Created CRUD for locations and categories |
 |       | 1,5   | Created CRUD for products |
 | 25.1. | 3     | Deployment for microservices to Render + automatic deployments with pipeline |
-| =     | 31    ||
+| 26.1. | 1     | Add some tests to backend |
+| =     | 32    ||

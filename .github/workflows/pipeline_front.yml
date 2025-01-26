@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'household-app/**'
 
 jobs:
   simple_deployment_pipeline:

@@ -1,9 +1,10 @@
 import { StyleSheet, View } from 'react-native';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-native';
+import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-native';
 
 import ProductList from './ProductList';
 import AppBar from './AppBar';
 import SignIn from './SignIn';
+import SignUp from './SignUp';
 import theme from '../theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
@@ -19,34 +20,46 @@ const styles = StyleSheet.create({
 const Main = () => {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const checkAuth = async () => {
       const token = await AsyncStorage.getItem('accessToken');
       setIsSignedIn(!!token);
-      if (!!token) {
-        navigate('/');
-      } else {
+
+      if (token && location.pathname === '/signin') {
+        navigate('/'); 
+      }
+      if (!token && location.pathname !== '/signup' && location.pathname !== '/signin') {
         navigate('/signin'); 
       }
     };
-
     checkAuth();
-  }, [navigate]);
+  }, [location]);
 
   const handleSignOut = async () => {
     await AsyncStorage.removeItem('accessToken');
-    setIsSignedIn(false); 
+    setIsSignedIn(false);
     navigate('/signin');
   };
-  
+
   return (
     <View style={styles.container}>
       <AppBar isSignedIn={isSignedIn} onSignOut={handleSignOut} />
       <Routes>
-        <Route path="/" element={isSignedIn ? <ProductList /> : <Navigate to="/signin" replace />} />
-        <Route path="/signin" element={!isSignedIn ? <SignIn onSignIn={() => setIsSignedIn(true)} /> : <Navigate to="/" replace />} />
-        <Route path="*" element={<Navigate to={isSignedIn ? '/' : '/signin'} replace />} />
+        <Route
+          path="/"
+          element={isSignedIn ? <ProductList /> : <Navigate to="/signin" replace />}
+        />
+        <Route
+          path="/signin"
+          element={!isSignedIn ? <SignIn onSignIn={() => setIsSignedIn(true)} /> : <Navigate to="/" replace />}
+        />
+        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="*"
+          element={<Navigate to={isSignedIn ? '/' : '/signin'} replace />}
+        />
       </Routes>
     </View>
   );

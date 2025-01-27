@@ -21,6 +21,11 @@ router.post('/', async (req, res) => {
     try {
       const { name, username, password } = req.body
 
+      const existingUser = await User.findOne({ username });
+      if (existingUser) {
+        return res.status(400).json({ error: 'Username is already taken' });
+      }
+
       const passwordHash = await hashPassword(password)
     
       const user = new User({ name, username, password: passwordHash })

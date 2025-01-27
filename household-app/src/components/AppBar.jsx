@@ -55,6 +55,11 @@ const AppBar = () => {
     navigate('/signin');
   };
 
+  const handleSignUp = () => {
+    console.log('Rendering Sign Up page');
+    navigate('/signup');
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>HouseHold</Text>
@@ -66,6 +71,9 @@ const AppBar = () => {
         <>
           <Pressable onPress={handleSignIn}>
             <Text style={styles.button}>Sign in</Text>
+          </Pressable>
+          <Pressable onPress={handleSignUp}>
+            <Text style={styles.button}>Sign up</Text>
           </Pressable>
         </>
       )}

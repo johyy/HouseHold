@@ -18,4 +18,5 @@
 | 25.1. | 3     | Deployment for microservices to Render + automatic deployments with pipeline |
 | 26.1. | 1     | Add some tests to backend |
 |       | 1     | Start with the frontend - AppBar and a mock ProductList |
-| =     | 33    ||
+| 27.1. | 4     | Configure login to frontend | 
+| =     | 37    ||

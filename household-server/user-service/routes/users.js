@@ -4,6 +4,8 @@ const { postgresPool } = require('../config/databases')
 const User = require('../models/user')
 const verifyToken = require('../middlewares/auth')
 const { hashPassword} = require('../services/passwordService')
+const jwt = require('jsonwebtoken')
+const { JWT_SECRET } = require('../config/config')
 
 router.get('/', async (req, res) => {
   try {
@@ -23,7 +25,10 @@ router.post('/', async (req, res) => {
     
       const user = new User({ name, username, password: passwordHash })
       await user.save()
-      res.status(201).json(user)
+  
+      const token = jwt.sign({ id: user.id }, JWT_SECRET)
+
+      res.status(201).json({ user, token })
     } catch (error) {
       res.status(500).json({ error: error.message })
     }

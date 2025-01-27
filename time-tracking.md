@@ -19,4 +19,5 @@
 | 26.1. | 1     | Add some tests to backend |
 |       | 1     | Start with the frontend - AppBar and a mock ProductList |
 | 27.1. | 4     | Configure login to frontend | 
-| =     | 37    ||
+|       | 0,5   | Configure  new user to get a token with user-service |
+| =     | 37,5    ||

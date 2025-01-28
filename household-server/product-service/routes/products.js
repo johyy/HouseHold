@@ -9,21 +9,7 @@ const verifyToken = require('../middlewares/auth')
 router.get('/', verifyToken, async (req, res) => {
   try {
     const userId = req.user_id
-    const query = `
-      SELECT 
-        p.id,
-        p.name,
-        p.description,
-        p.quantity,
-        p.unit,
-        p.expiration_date,
-        l.name AS location,
-        c.name AS category
-      FROM products p
-      LEFT JOIN locations l ON p.location_id = l.id
-      LEFT JOIN categories c ON p.category_id = c.id
-      WHERE p.user_id = $1
-    `;
+    const query = `SELECT * FROM products WHERE user_id = $1`
     const values = [userId]
     const result = await postgresPool.query(query, values)
     
@@ -123,6 +109,38 @@ router.delete('/:id', verifyToken, async (req, res) => {
         console.error('Error deleting product in MongoDB:', error.message)
         res.status(500).json({ error: error.message })
     }
+})
+
+router.get('/:id', verifyToken, async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const query = `
+      SELECT 
+        p.id,
+        p.name,
+        p.description,
+        p.quantity,
+        p.unit,
+        p.expiration_date,
+        l.name AS location,
+        c.name AS category
+      FROM products p
+      LEFT JOIN locations l ON p.location_id = l.id
+      LEFT JOIN categories c ON p.category_id = c.id
+      WHERE p.id = $1
+    `;
+    const values = [productId]
+    const result = await postgresPool.query(query, values)
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Product not found' })
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetching product details:', error.message)
+    res.status(500).json({ error: error.message })
+  }
 })
 
 module.exports = router

@@ -60,10 +60,16 @@ const ProductDetails = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{product.name}</Text>
+      <Text style={styles.title}>{product.name} {product.quantity} {product.unit}</Text>
       <Text style={styles.text}>Selite: {product.description}</Text>
       <Text style={styles.text}>Kategoria: {product.category}</Text>
       <Text style={styles.text}>Sijainti: {product.location}</Text>
+      <Text style={styles.text}>
+        {product.expiration_date 
+        ? `Parasta ennen: ${new Date(product.expiration_date).toLocaleDateString('fi-FI')}` 
+        : ''}
+      </Text>
+  
       <Pressable style={styles.backButton} onPress={() => navigate('/')}>
         <Text style={styles.backButtonText}>⇦ Takaisin tavaroihin</Text>
       </Pressable>

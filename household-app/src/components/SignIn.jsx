@@ -103,7 +103,7 @@ const SignIn = () => {
       await signIn(values);
       navigate('/');
     } catch (error) {
-      console.log('Kirjautuminen epäonnistui:', error.message);
+      console.log('Logging in failed:', error.message);
     } finally {
       setLoading(false);
     }

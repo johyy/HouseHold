@@ -22,4 +22,5 @@
 |       | 0,5   | Configure  new user to get a token with user-service |
 |       | 2,5   | Add signing up to frontend |
 | 28.1. | 6     | Configure product list and product details views, translate to finnish + other adjustments |
-| =     | 46    ||
+|       | 3     | Add FooterBar and possibility to add products |
+| =     | 49    ||

@@ -4,8 +4,10 @@ import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-
 import ProductList from './ProductList';
 import ProductDetails from './ProductDetails';
 import AppBar from './AppBar';
+import FooterBar from './FooterBar';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import AddProduct from './AddProduct';
 import theme from '../theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
@@ -68,11 +70,16 @@ const Main = () => {
           path="/product/:id"
           element={isSignedIn ? <ProductDetails /> : <Navigate to="/singin" replace />}
         />
+        <Route 
+          path="/addproduct"
+          element={isSignedIn ? <AddProduct /> : <Navigate to="/singin" replace />}
+          />
         <Route
           path="*"
           element={<Navigate to={isSignedIn ? '/' : '/signin'} replace />}
         />
       </Routes>
+      <FooterBar />
     </View>
   );
 };

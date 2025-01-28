@@ -75,7 +75,7 @@ const ProductList = () => {
       });
   
       if (!response.ok) {
-        throw new Error('Tuotteiden hakeminen epäonnistui.');
+        throw new Error('Fetiching products failed.');
       }
   
       const data = await response.json();

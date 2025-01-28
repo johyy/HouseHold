@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, Pressable, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { TextInput, Pressable, View, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-native';
@@ -125,7 +125,6 @@ const SignUpForm = ({ onSubmit, isLoading }) => {
       </Pressable>
       {isLoading && (
         <View style={styles.loading}>
-          <ActivityIndicator color="blue" />
         </View>
       )}
     </View>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import Constants from 'expo-constants';
 import Text from './Text';
@@ -13,22 +13,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
+    justifyContent: 'space-between',
   },
   title: {
     color: 'white',
     fontSize: 25,
     fontWeight: 'bold',
-    flex: 1,
+    marginBottom: 10,
+    marginLeft: 10
+  },
+  buttonContainer: {
+    flexDirection: 'row',
   },
   button: {
     color: 'white',
     fontSize: 16,
-    marginHorizontal: 10,
+    marginLeft: 10,
   },
+  
 });
 
 const AppBar = () => {
-  const [isSignedIn, setIsSignedIn] = React.useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const signOut = useSignOut();
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,21 +67,25 @@ const AppBar = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>HouseHold</Text>
-      {isSignedIn ? (
-        <Pressable onPress={handleSignOut}>
-          <Text style={styles.button}>Kirjaudu ulos</Text>
-        </Pressable>
-      ) : (
-        <>
-          <Pressable onPress={handleSignIn}>
-            <Text style={styles.button}>Kirjaudu</Text>
+      <Pressable onPress={handleSignIn}>
+        <Text style={styles.title}>HouseHold</Text>
+      </Pressable>
+      <View style={styles.buttonContainer}>
+        {isSignedIn ? (
+          <Pressable onPress={handleSignOut}>
+            <Text style={styles.button}>Kirjaudu ulos</Text>
           </Pressable>
-          <Pressable onPress={handleSignUp}>
-            <Text style={styles.button}>Luo tunnus</Text>
-          </Pressable>
-        </>
-      )}
+        ) : (
+          <>
+            <Pressable onPress={handleSignIn}>
+              <Text style={styles.button}>Kirjaudu</Text>
+            </Pressable>
+            <Pressable onPress={handleSignUp}>
+              <Text style={styles.button}>Luo tunnus</Text>
+            </Pressable>
+          </>
+        )}
+      </View>
     </View>
   );
 };

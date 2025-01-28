@@ -1,4 +1,8 @@
-import { FlatList, View, StyleSheet, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { FlatList, View, StyleSheet, Text, Pressable } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigate } from 'react-router-native';
+import { API_URL_PRODUCTS } from '@env';
 
 const styles = StyleSheet.create({
   separator: {
@@ -18,58 +22,102 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  description: {
-    fontSize: 14,
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  loading: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  emptyText: {
+    textAlign: 'center',
+    marginTop: 20,
+    fontSize: 16,
     color: 'gray',
-    marginTop: 5,
   },
 });
 
-const products = [
-  {
-    id: '67938f8112d19c62da977bc8',
-    name: 'Hammasharja',
-    description: 'Perinteinen hammasharja, punainen',
-    userId: '679294a924bab50c3d1ee425',
-    locationId: '67938d8212d19c62da977bc6',
-    categoryId: '6793888312d19c62da977bbe',
-    expirationDate: '2025-12-31',
-    quantity: 1,
-    unit: 'pcs',
-    createdAt: '2025-01-24 10:00:00',
-    updatedAt: '2025-01-24 13:04:59.921',
-  },
-  {
-    id: '6793c75951b5c5112bb87bb5',
-    name: 'Saippua',
-    description: 'Palmolive',
-    userId: '679294a924bab50c3d1ee425',
-    locationId: '67938d8212d19c62da977bc6',
-    categoryId: '6793888312d19c62da977bbe',
-    expirationDate: '2025-12-31',
-    quantity: 1,
-    unit: 'pcs',
-    createdAt: '2025-01-24 19:01:13.687',
-    updatedAt: '2025-01-24 19:03:54.596',
-  },
-];
-
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const ProductItem = ({ item }) => (
-  <View style={styles.itemContainer}>
-    <Text style={styles.name}>{item.name}</Text>
-    <Text style={styles.description}>{item.description}</Text>
-  </View>
+const ProductItem = ({ item, onPress }) => (
+  <Pressable onPress={() => onPress(item.id)}>
+    <View style={styles.itemContainer}>
+      <Text style={styles.name}>{item.name}</Text>
+    </View>
+  </Pressable>
 );
 
 const ProductList = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      setError(null); 
+  
+      const token = await AsyncStorage.getItem('accessToken');
+  
+      if (!token) {
+        return;
+      }
+  
+      const response = await fetch(`${API_URL_PRODUCTS}/products`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Tuotteiden hakeminen epäonnistui.');
+      }
+  
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error('Error fetching products:', error.message);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loading}>
+        <Text>Ladataan tavaroita...</Text>
+      </View>
+    );
+
+  }
+
+  if (error) {
+    return <Text style={styles.errorText}>{error}</Text>;
+  }
+
   return (
     <FlatList
       data={products}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <ProductItem item={item} />}
+      renderItem={({ item }) => (
+        <ProductItem
+          item={item}
+          onPress={(id) => navigate(`/product/${id}`)}
+        />
+      )}
+      ListEmptyComponent={<Text style={styles.emptyText}>Ei vielä lisättyjä tavaroita</Text>}
     />
   );
 };

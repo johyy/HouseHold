@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-native';
 
 import ProductList from './ProductList';
+import ProductDetails from './ProductDetails';
 import AppBar from './AppBar';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
@@ -43,6 +44,10 @@ const Main = () => {
     navigate('/signin');
   };
 
+  if (isSignedIn === null) {
+    return <View style={styles.container} />;
+  }
+
   return (
     <View style={styles.container}>
       <AppBar isSignedIn={isSignedIn} onSignOut={handleSignOut} />
@@ -55,7 +60,14 @@ const Main = () => {
           path="/signin"
           element={!isSignedIn ? <SignIn onSignIn={() => setIsSignedIn(true)} /> : <Navigate to="/" replace />}
         />
-        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/signup"
+          element={!isSignedIn ? <SignUp /> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="/product/:id"
+          element={isSignedIn ? <ProductDetails /> : <Navigate to="/singin" replace />}
+        />
         <Route
           path="*"
           element={<Navigate to={isSignedIn ? '/' : '/signin'} replace />}

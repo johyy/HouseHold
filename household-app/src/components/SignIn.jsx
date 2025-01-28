@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { TextInput, Pressable, View, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -7,37 +8,44 @@ import Text from './Text';
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 15,
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     padding: 10,
-    marginBottom: 10,
+    marginBottom: 15,
     borderRadius: 5,
+    backgroundColor: 'white',
   },
   button: {
-    backgroundColor: '#007BFF',
-    padding: 10,
+    backgroundColor: '#2E5894',
+    padding: 12,
     alignItems: 'center',
     borderRadius: 5,
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 16,
   },
   errorText: {
     color: 'red',
-    marginBottom: 10,
+    marginBottom: 15,
+    fontSize: 14,
+  },
+  loading: {
+    marginTop: 10,
+    alignItems: 'center',
   },
 });
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
+  username: yup.string().required('Käyttäjätunnus tarvitaan'),
+  password: yup.string().required('Salasana tarvitaan'),
 });
 
-const SignInForm = ({ onSubmit }) => {
+const SignInForm = ({ onSubmit, isLoading }) => {
   const formik = useFormik({
     initialValues: { username: '', password: '' },
     validationSchema,
@@ -48,26 +56,38 @@ const SignInForm = ({ onSubmit }) => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder="Käyttäjätunnus"
         value={formik.values.username}
         onChangeText={formik.handleChange('username')}
+        editable={!isLoading}
       />
       {formik.touched.username && formik.errors.username && (
         <Text style={styles.errorText}>{formik.errors.username}</Text>
       )}
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder="Salasana"
         secureTextEntry
         value={formik.values.password}
         onChangeText={formik.handleChange('password')}
+        editable={!isLoading}
       />
       {formik.touched.password && formik.errors.password && (
         <Text style={styles.errorText}>{formik.errors.password}</Text>
       )}
-      <Pressable style={styles.button} onPress={formik.handleSubmit}>
-        <Text style={styles.buttonText}>Sign In</Text>
+      <Pressable
+        style={[styles.button, isLoading && { backgroundColor: '#ccc' }]}
+        onPress={formik.handleSubmit}
+        disabled={isLoading}
+      >
+        <Text style={styles.buttonText}>
+          {isLoading ? 'Kirjaudutaan...' : 'Kirjaudu sisään'}
+        </Text>
       </Pressable>
+      {isLoading && (
+        <View style={styles.loading}>
+        </View>
+      )}
     </View>
   );
 };
@@ -75,16 +95,21 @@ const SignInForm = ({ onSubmit }) => {
 const SignIn = () => {
   const { signIn } = useSignIn();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values) => {
     try {
-      const token = await signIn(values);
+      setLoading(true);
+      await signIn(values);
       navigate('/');
-    } catch (e) {
-      console.log('Sign-in failed:', e.message);
+    } catch (error) {
+      console.log('Kirjautuminen epäonnistui:', error.message);
+    } finally {
+      setLoading(false);
     }
   };
-  return <SignInForm onSubmit={onSubmit} />;
+
+  return <SignInForm onSubmit={onSubmit} isLoading={loading} />;
 };
 
 export default SignIn;

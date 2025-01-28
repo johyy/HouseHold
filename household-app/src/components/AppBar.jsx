@@ -56,7 +56,6 @@ const AppBar = () => {
   };
 
   const handleSignUp = () => {
-    console.log('Rendering Sign Up page');
     navigate('/signup');
   };
 
@@ -65,15 +64,15 @@ const AppBar = () => {
       <Text style={styles.title}>HouseHold</Text>
       {isSignedIn ? (
         <Pressable onPress={handleSignOut}>
-          <Text style={styles.button}>Sign out</Text>
+          <Text style={styles.button}>Kirjaudu ulos</Text>
         </Pressable>
       ) : (
         <>
           <Pressable onPress={handleSignIn}>
-            <Text style={styles.button}>Sign in</Text>
+            <Text style={styles.button}>Kirjaudu</Text>
           </Pressable>
           <Pressable onPress={handleSignUp}>
-            <Text style={styles.button}>Sign up</Text>
+            <Text style={styles.button}>Luo tunnus</Text>
           </Pressable>
         </>
       )}

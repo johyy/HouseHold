@@ -21,5 +21,5 @@
 | 27.1. | 4     | Configure login to frontend | 
 |       | 0,5   | Configure  new user to get a token with user-service |
 |       | 2,5   | Add signing up to frontend |
-|       | 6     | Configure product list and product details views, translate to finnish + other adjustments |
+| 28.1. | 6     | Configure product list and product details views, translate to finnish + other adjustments |
 | =     | 46    ||

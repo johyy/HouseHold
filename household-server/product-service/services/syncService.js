@@ -128,6 +128,20 @@ const syncChangesToPostgres = async (change) => {
           console.log('Deleted product from PostgreSQL:', id)
         }
       }
+
+      if (change.ns.coll === 'testProducts') {
+        if (operationType === 'insert') {
+          const { _id, name, description, user_id, location_id, category_id, expiration_date, quantity, unit, createdAt, updatedAt } = fullDocument
+          await postgresPool.query(
+            `INSERT INTO testProducts (id, name, description, user_id, location_id, category_id, expiration_date, quantity, unit, created_at, updated_at)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+             ON CONFLICT (id) DO NOTHING`,
+            [_id.toString(), name, description, user_id, location_id, category_id, expiration_date, quantity, unit, createdAt, updatedAt]
+          )
+          console.log('Inserted test product into PostgreSQL:', fullDocument)
+        } 
+      }
+
     } catch (error) {
       console.error('Error syncing change to PostgreSQL:', error.message)
     }

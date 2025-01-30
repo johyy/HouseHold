@@ -9,6 +9,7 @@ const startChangeStream = () => {
       mongoose.connection.collection('products').watch(),
       mongoose.connection.collection('locations').watch(),
       mongoose.connection.collection('categories').watch(),
+      mongoose.connection.collection('testProducts').watch(),
     ]
 
     changeStreams.forEach(changeStream => {

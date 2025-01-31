@@ -6,22 +6,8 @@ const testProductSchema = new mongoose.Schema({
         required: true,
     },
     description: String,
-    user_id: { 
-        type: String,
-        required: true,
-    },
-    location_id: { 
-        type: String,
-        default: null,
-    },
-    category_id: { 
-        type: String,
-        required: true,
-    },
-    expiration_date: Date,
-    quantity: Number,
-    unit: String,
-}, { timestamps: true })
+    user_id: String,
+})
 
 const TestProduct = mongoose.model('TestProduct', testProductSchema, 'testProducts')
 

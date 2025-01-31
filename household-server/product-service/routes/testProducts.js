@@ -16,18 +16,13 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const { name, description, user_id, location_id, category_id, expiration_date, quantity, unit } = req.body
+    const { name, description, user_id } = req.body
 
     try {
         const product = new TestProduct({
             name,
             description,
             user_id,
-            location_id,
-            category_id,
-            expiration_date,
-            quantity,
-            unit
         })
 
         await product.save()

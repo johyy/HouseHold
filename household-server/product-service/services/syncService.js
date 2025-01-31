@@ -131,12 +131,12 @@ const syncChangesToPostgres = async (change) => {
 
       if (change.ns.coll === 'testProducts') {
         if (operationType === 'insert') {
-          const { _id, name, description, user_id, location_id, category_id, expiration_date, quantity, unit, createdAt, updatedAt } = fullDocument
+          const { _id, name, description, user_id } = fullDocument
           await postgresPool.query(
-            `INSERT INTO testProducts (id, name, description, user_id, location_id, category_id, expiration_date, quantity, unit, created_at, updated_at)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+            `INSERT INTO testProducts (id, name, description, user_id)
+             VALUES ($1, $2, $3, $4)
              ON CONFLICT (id) DO NOTHING`,
-            [_id.toString(), name, description, user_id, location_id, category_id, expiration_date, quantity, unit, createdAt, updatedAt]
+            [_id.toString(), name, description, user_id]
           )
           console.log('Inserted test product into PostgreSQL:', fullDocument)
         } 

@@ -113,7 +113,7 @@ router.delete('/:id', verifyToken, async (req, res) => {
 
 router.get('/:id', verifyToken, async (req, res) => {
   try {
-    const productId = req.params.id;
+    const productId = req.params.id
     const query = `
       SELECT 
         p.id,
@@ -128,7 +128,7 @@ router.get('/:id', verifyToken, async (req, res) => {
       LEFT JOIN locations l ON p.location_id = l.id
       LEFT JOIN categories c ON p.category_id = c.id
       WHERE p.id = $1
-    `;
+    `
     const values = [productId]
     const result = await postgresPool.query(query, values)
     
@@ -136,7 +136,7 @@ router.get('/:id', verifyToken, async (req, res) => {
       return res.status(404).json({ error: 'Product not found' })
     }
 
-    res.json(result.rows[0]);
+    res.json(result.rows[0])
   } catch (error) {
     console.error('Error fetching product details:', error.message)
     res.status(500).json({ error: error.message })

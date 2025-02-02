@@ -118,6 +118,7 @@ const ProductList = () => {
         />
       )}
       ListEmptyComponent={<Text style={styles.emptyText}>Ei vielä lisättyjä tavaroita</Text>}
+      contentContainerStyle={{ paddingBottom: 45 }}
     />
   );
 };

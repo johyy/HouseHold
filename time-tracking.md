@@ -23,4 +23,5 @@
 |       | 2,5   | Add signing up to frontend |
 | 28.1. | 6     | Configure product list and product details views, translate to finnish + other adjustments |
 |       | 3     | Add FooterBar and possibility to add products |
-| =     | 49    ||
+| 2.2.  | 2     | Make adding a product better + enhance product list view and product details view |
+| =     | 51    ||

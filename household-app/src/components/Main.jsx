@@ -12,6 +12,7 @@ import theme from '../theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.mainBackground,

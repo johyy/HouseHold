@@ -5,6 +5,7 @@ import Text from './Text';
 import { useNavigate } from 'react-router-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL_PRODUCTS } from '@env';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const styles = StyleSheet.create({
   container: {
@@ -50,6 +51,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
 });
 
 const AddProduct = () => {
@@ -61,8 +67,42 @@ const AddProduct = () => {
   const [selectedLocation, setSelectedLocation] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [loading, setLoading] = useState(true);
+  const [expirationDate, setExpirationDate] = useState(null);
+  const [unit, setUnit] = useState('kpl');
   const navigate = useNavigate();
 
+  const DateInput = ({ date, setDate }) => {
+    const [showPicker, setShowPicker] = useState(false);
+  
+    const onChange = (event, selectedDate) => {
+      setShowPicker(false);
+      if (selectedDate) {
+        setDate(selectedDate);
+      }
+    };
+  
+    return (
+      <View>
+        <Pressable onPress={() => setShowPicker(true)}>
+          <TextInput
+            style={styles.input}
+            placeholder="Viimeinen käyttöpäivä"
+            value={date ? date.toISOString().split('T')[0] : ''}
+            editable={false}
+          />
+        </Pressable>
+  
+        {showPicker && (
+          <DateTimePicker
+            value={date || new Date()}
+            mode="date"
+            onChange={onChange}
+          />
+        )}
+      </View>
+    );
+  };
+  
   const fetchLocationsAndCategories = async () => {
     try {
       const token = await AsyncStorage.getItem('accessToken');
@@ -110,7 +150,15 @@ const AddProduct = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name, description, quantity, unit: "kpl", location_id: selectedLocation, category_id: selectedCategory }),
+        body: JSON.stringify({ 
+          name, 
+          description, 
+          quantity, 
+          unit, 
+          location_id: selectedLocation, 
+          category_id: selectedCategory, 
+          expiration_date: expirationDate 
+        }),
       });
 
       if (!response.ok) {
@@ -119,8 +167,10 @@ const AddProduct = () => {
 
       setName('');
       setDescription('');
+      setUnit('kpl');
       setSelectedLocation('');
       setSelectedCategory('');
+      setExpirationDate(null)
       navigate('/');
     } catch (error) {
       console.log('Adding a product failed:', error.message);
@@ -157,7 +207,19 @@ const AddProduct = () => {
         placeholder="Määrä"
         value={quantity}
         onChangeText={setQuantity}
+        keyboardType="numeric"
       />
+      <View style={styles.picker}>
+        <Picker selectedValue={unit} onValueChange={(itemValue) => setUnit(itemValue)}>
+          <Picker.Item label="kpl" value="kpl" />
+          <Picker.Item label="rulla" value="rulla" />
+          <Picker.Item label="litra" value="litra" />
+          <Picker.Item label="kg" value="kg" />
+          <Picker.Item label="pkt" value="pkt" />
+          <Picker.Item label="pussi" value="pussi" />
+        </Picker>
+      </View>
+      <DateInput date={expirationDate} setDate={setExpirationDate} />
       <View style={styles.picker}>
         <Picker
           selectedValue={selectedLocation}

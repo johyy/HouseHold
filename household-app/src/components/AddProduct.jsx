@@ -162,7 +162,7 @@ const AddProduct = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Adding a product failed');
+        throw new Error('Tavaran lisääminen epäonnistui');
       }
 
       setName('');
@@ -177,8 +177,8 @@ const AddProduct = () => {
     }
   };
 
-  const handleCreateLocation = () => navigate('/');
-  const handleCreateCategory = () => navigate('/');
+  const handleCreateLocation = () => navigate('/addlocation');
+  const handleCreateCategory = () => navigate('/addcategory');
 
   if (loading) {
     return (

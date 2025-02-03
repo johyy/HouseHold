@@ -8,6 +8,8 @@ import FooterBar from './FooterBar';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import AddProduct from './AddProduct';
+import AddLocation from './AddLocation';
+import AddCategory from './AddCategory'
 import theme from '../theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
@@ -75,6 +77,14 @@ const Main = () => {
           path="/addproduct"
           element={isSignedIn ? <AddProduct /> : <Navigate to="/singin" replace />}
           />
+        <Route 
+          path="/addlocation"
+          element={isSignedIn ? <AddLocation /> : <Navigate to="/signin" replace />}
+        />
+        <Route 
+          path="/addcategory"
+          element={isSignedIn ? <AddCategory /> : <Navigate to="/signin" replace />}
+        />
         <Route
           path="*"
           element={<Navigate to={isSignedIn ? '/' : '/signin'} replace />}

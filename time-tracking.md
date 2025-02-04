@@ -27,4 +27,5 @@
 | 3.2.  | 3     | Add creating location and category views |
 |       | 5     | Add premilinary sorting orders + filtering + search |
 | 4.2.  | 2,5   | Make filtering visibility changeable |
-| =     | 61,5  ||
+|       | 2     | Add preliminary modifyind product view |
+| =     | 63,5  ||

@@ -18,18 +18,18 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     marginTop: 10 
   },
-  backButton: {
+  button: {
     marginTop: 20,
     padding: 10,
     backgroundColor: '#2E5894',
     borderRadius: 5,
     alignSelf: 'flex-start'
   },
-  backButtonText: {
+  buttonText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
-  },
+  }
 });
 
 const ProductDetails = () => {
@@ -76,9 +76,13 @@ const ProductDetails = () => {
         : ''}
       </Text>
   
-      <Pressable style={styles.backButton} onPress={() => navigate('/')}>
-        <Text style={styles.backButtonText}>⇦ Takaisin tavaroihin</Text>
+      <Pressable style={styles.button} onPress={() => navigate(`/modifyproduct/${product.id}`)}>
+        <Text style={styles.buttonText}>Muokkaa tavaraa</Text>
       </Pressable>
+      <Pressable style={styles.button} onPress={() => navigate('/')}>
+        <Text style={styles.buttonText}>⇦ Takaisin tavaroihin</Text>
+      </Pressable>
+
     </View>
   );
 };

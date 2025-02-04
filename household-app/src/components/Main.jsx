@@ -10,6 +10,7 @@ import SignUp from './SignUp';
 import AddProduct from './AddProduct';
 import AddLocation from './AddLocation';
 import AddCategory from './AddCategory'
+import ModifyProduct from './ModifyProduct';
 import theme from '../theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
@@ -84,6 +85,10 @@ const Main = () => {
         <Route 
           path="/addcategory"
           element={isSignedIn ? <AddCategory /> : <Navigate to="/signin" replace />}
+        />
+        <Route
+          path="/modifyproduct/:id"
+          element={isSignedIn ? <ModifyProduct /> : <Navigate to="/singin" replace />}
         />
         <Route
           path="*"

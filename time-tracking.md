@@ -26,4 +26,5 @@
 | 2.2.  | 2     | Make adding a product better + enhance product list view and product details view |
 | 3.2.  | 3     | Add creating location and category views |
 |       | 5     | Add premilinary sorting orders + filtering + search |
-| =     | 59    ||
+| 4.2.  | 2,5   | Make filtering visibility changeable |
+| =     | 61,5  ||

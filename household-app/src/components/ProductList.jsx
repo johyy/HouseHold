@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, View, StyleSheet, Text, Pressable, TextInput } from 'react-native';
+import { FlatList, View, StyleSheet, Pressable, TextInput } from 'react-native';
+import Text from './Text';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigate } from 'react-router-native';
 import { API_URL_PRODUCTS } from '@env';
@@ -81,7 +82,8 @@ const ProductList = () => {
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState('');
   const [sortBy, setSortBy] = useState('name'); 
-  const [sortOrder, setSortOrder] = useState('asc'); 
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [filterVisible, setFilterVisible] = useState(false);
   const navigate = useNavigate();
 
   const fetchProducts = async () => {
@@ -238,73 +240,91 @@ const ProductList = () => {
 
   return (
     <View style={styles.container}>
-    <TextInput
-      style={styles.searchInput}
-      placeholder="Hae tuotteita..."
-      value={searchQuery}
-      onChangeText={setSearchQuery}
-    />
 
-    <View style={styles.pickerContainer}>
-      <Picker
-        selectedValue={selectedCategory}
-        onValueChange={(itemValue) => setSelectedCategory(itemValue)}
+      <Pressable
+        onPress={() => setFilterVisible(!filterVisible)}
+        style={{ flexDirection: 'row', marginBottom: 10 }}
       >
-        <Picker.Item label="Kaikki kategoriat" value="" />
-        {categories.map((c) => (
-          <Picker.Item key={c.id} label={c.name} value={c.id} />
-        ))}
-      </Picker>
-    </View>
+        <Text fontWeight="bold" fontSize="subheading">
+          Muokkaa hakuehtoja
+        </Text>
+        <Text fontSize="subheading">
+          {filterVisible ? " ▲" : " ▼"}
+        </Text>
+      </Pressable>
+  
 
-    <View style={styles.pickerContainer}>
-      <Picker
-        selectedValue={selectedLocation}
-        onValueChange={(itemValue) => setSelectedLocation(itemValue)}
-      >
-        <Picker.Item label="Kaikki sijainnit" value="" />
-        {locations.map((l) => (
-          <Picker.Item key={l.id} label={l.name} value={l.id} />
-        ))}
-      </Picker>
-    </View>
-    
-    <View style={styles.pickerContainer}>
-      <Picker
-        selectedValue={sortBy}
-        onValueChange={(itemValue) => setSortBy(itemValue)}
-      >
-        <Picker.Item label="Lajittele nimen mukaan" value="name" />
-        <Picker.Item label="Lajittele lisäyspäivän mukaan" value="created_date" />
-        <Picker.Item label="Lajittele viimeisen käyttöpäivän mukaan" value="expiration_date" />
-      </Picker>
-    </View>
-
-    <View style={styles.pickerContainer}>
-      <Picker
-        selectedValue={sortOrder}
-        onValueChange={(itemValue) => setSortOrder(itemValue)}
-      >
-        <Picker.Item label="Nouseva järjestys" value="asc" />
-        <Picker.Item label="Laskeva järjestys" value="desc" />
-      </Picker>
-    </View>
-
-    <FlatList
-      data={filteredProducts}
-      ItemSeparatorComponent={ItemSeparator}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <ProductItem
-          item={item}
-          onPress={(id) => navigate(`/product/${id}`)}
-        />
+      {filterVisible && (
+        <View>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Hae tuotteita..."
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+  
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={selectedCategory}
+              onValueChange={(itemValue) => setSelectedCategory(itemValue)}
+            >
+              <Picker.Item label="Kaikki kategoriat" value="" />
+              {categories.map((c) => (
+                <Picker.Item key={c.id} label={c.name} value={c.id} />
+              ))}
+            </Picker>
+          </View>
+  
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={selectedLocation}
+              onValueChange={(itemValue) => setSelectedLocation(itemValue)}
+            >
+              <Picker.Item label="Kaikki sijainnit" value="" />
+              {locations.map((l) => (
+                <Picker.Item key={l.id} label={l.name} value={l.id} />
+              ))}
+            </Picker>
+          </View>
+  
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={sortBy}
+              onValueChange={(itemValue) => setSortBy(itemValue)}
+            >
+              <Picker.Item label="Lajittele nimen mukaan" value="name" />
+              <Picker.Item label="Lajittele lisäyspäivän mukaan" value="created_date" />
+              <Picker.Item label="Lajittele vanhenemisen mukaan" value="expiration_date" />
+            </Picker>
+          </View>
+  
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={sortOrder}
+              onValueChange={(itemValue) => setSortOrder(itemValue)}
+            >
+              <Picker.Item label="Nouseva järjestys" value="asc" />
+              <Picker.Item label="Laskeva järjestys" value="desc" />
+            </Picker>
+          </View>
+        </View>
       )}
-      ListEmptyComponent={<Text style={styles.emptyText}>Ei vielä lisättyjä tavaroita</Text>}
-      contentContainerStyle={{ paddingBottom: 45 }}
-    />
+  
+      <FlatList
+        data={filteredProducts}
+        ItemSeparatorComponent={ItemSeparator}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <ProductItem
+            item={item}
+            onPress={(id) => navigate(`/product/${id}`)}
+          />
+        )}
+        ListEmptyComponent={<Text style={styles.emptyText}>Ei vielä lisättyjä tavaroita</Text>}
+        contentContainerStyle={{ paddingBottom: 45 }}
+      />
     </View>
   );
-};
+}  
 
 export default ProductList;

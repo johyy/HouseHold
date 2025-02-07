@@ -5,6 +5,7 @@ const Product = require('../models/product')
 const Location = require('../models/location')
 const Category = require('../models/category')
 const verifyToken = require('../middlewares/auth')
+// const { v4: uuidv4 } = require ('uuid')
 
 router.get('/', verifyToken, async (req, res) => {
   try {
@@ -19,6 +20,39 @@ router.get('/', verifyToken, async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 })
+
+/* FOR TESTING PURPOSES / POSTING DIRECTLY TO POSTGRES
+router.post('/', verifyToken, async (req, res) => {
+  const { name, description, location_id, category_id, expiration_date, quantity, unit } = req.body
+
+  try {
+      const locationResult = await postgresPool.query('SELECT * FROM locations WHERE id = $1', [location_id])
+      const categoryResult = await postgresPool.query('SELECT * FROM categories WHERE id = $1', [category_id])
+
+      if (locationResult.rows.length === 0) {
+          return res.status(400).json({ error: 'Invalid location_id: Location not found.' })
+      }
+
+      if (categoryResult.rows.length === 0) {
+          return res.status(400).json({ error: 'Invalid category_id: Category not found.' })
+      }
+
+      const productId = uuidv4()
+
+      const query = `
+          INSERT INTO products (id, name, description, user_id, location_id, category_id, expiration_date, quantity, unit)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+          RETURNING id
+      `
+      const values = [productId, name, description, req.user_id, location_id, category_id, expiration_date, quantity, unit]      
+      const result = await postgresPool.query(query, values)
+
+      res.status(201).json({ id: result.rows[0].id, name, description, user_id: req.user_id, location_id, category_id, expiration_date, quantity, unit })
+  } catch (error) {
+      console.error('Error creating product in PostgreSQL:', error.message)
+      res.status(500).json({ error: error.message })
+  }
+})*/
 
 router.post('/', verifyToken, async (req, res) => {
     const { name, description, location_id, category_id, expiration_date, quantity, unit } = req.body
@@ -52,7 +86,7 @@ router.post('/', verifyToken, async (req, res) => {
         console.error('Error creating product in MongoDB:', error.message)
         res.status(500).json({ error: error.message })
     }
-})
+}) 
 
 router.put('/:id', verifyToken, async (req, res) => {
     const productId = req.params.id

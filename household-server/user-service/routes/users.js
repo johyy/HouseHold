@@ -17,6 +17,33 @@ router.get('/', async (req, res) => {
   }
 })
 
+/* FOR TESTING PURPOSES / POSTING DIRECTLY TO POSTGRES
+router.post('/', async (req, res) => {
+    try {
+      const { name, username, password } = req.body
+
+      const existingUser = await postgresPool.query('SELECT * FROM users WHERE username = $1', [username])
+      if (existingUser.rows.length > 0) {
+        return res.status(400).json({ error: 'Username is already taken' })
+      }
+
+      const passwordHash = await hashPassword(password)
+
+      const result = await postgresPool.query(
+        'INSERT INTO users (name, username, password) VALUES ($1, $2, $3) RETURNING id',
+        [name, username, passwordHash]
+      )
+
+      const userId = result.rows[0].id
+      const token = jwt.sign({ id: userId }, JWT_SECRET)
+
+      res.status(201).json({ user: { id: userId, name, username }, token })
+    } catch (error) {
+      console.error('Error creating user in PostgreSQL:', error.message)
+      res.status(500).json({ error: error.message })
+    }
+})*/
+
 router.post('/', async (req, res) => {
     try {
       const { name, username, password } = req.body
@@ -37,7 +64,7 @@ router.post('/', async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message })
     }
-  })
+  }) 
 
   router.put('/:id', verifyToken, async (req, res) => {
     try {

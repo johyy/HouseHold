@@ -11,7 +11,7 @@ export const options = {
 
             vus: 100,   // Average load test 
             iterations: 10000, // Average load test 
-            maxDuration: '60m', // Average load test 
+            maxDuration: '30m', // Average load test 
             gracefulStop: '60s', // Average load test 
             exec: 'postProducts', 
         },
@@ -22,15 +22,15 @@ export const options = {
 
             vus: 100,   // Average load test 
             iterations: 10000, // Average load test 
-            maxDuration: '60m', // Average load test 
+            maxDuration: '30m', // Average load test 
             gracefulStop: '60s', // Average load test 
             exec: 'getProducts', 
         },
     },
 }
 
-const USER_URL = 'http://localhost:3001/login'
-const PRODUCT_URL = 'http://localhost:3002/products'
+const USER_URL = 'https://household-users.onrender.com/login'
+const PRODUCT_URL = 'https://household-products.onrender.com/products'
 
 const postDuration = new Trend('post_req_duration')
 const getDuration = new Trend('get_req_duration')

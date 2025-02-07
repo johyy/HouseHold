@@ -4,6 +4,7 @@ import Text from './Text';
 import { useParams, useNavigate } from 'react-router-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL_PRODUCTS } from '@env';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,6 +38,38 @@ const styles = StyleSheet.create({
     fontSize: 16,
   }
 });
+
+const DateInput = ({ date, setDate }) => {
+    const [showPicker, setShowPicker] = useState(false);
+  
+    const onChange = (event, selectedDate) => {
+      setShowPicker(false);
+      if (selectedDate) {
+        setDate(new Date(selectedDate));
+      }
+    };
+  
+    return (
+      <View>
+        <Pressable onPress={() => setShowPicker(true)}>
+          <TextInput
+            style={styles.input}
+            placeholder="Viimeinen käyttöpäivä"
+            value={date ? new Date(date).toISOString().split('T')[0] : ''}
+            editable={false}
+          />
+        </Pressable>
+  
+        {showPicker && (
+          <DateTimePicker
+            value={date instanceof Date ? date : new Date()}
+            mode="date"
+            onChange={onChange}
+          />
+        )}
+      </View>
+    );
+  };
 
 const ModifyProduct = () => {
   const { id } = useParams();
@@ -95,6 +128,9 @@ const ModifyProduct = () => {
 
       <Text style={styles.label}>Selite:</Text>
       <TextInput style={styles.input} value={product.description} onChangeText={text => handleChange('description', text)} />
+
+      <Text style={styles.label}>Viimeinen käyttöpäivä:</Text>
+      <DateInput date={product.expiration_date} setDate={date => handleChange('expiration_date', date)} />
 
       <Pressable style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Tallenna muutokset</Text>

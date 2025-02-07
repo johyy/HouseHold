@@ -12,7 +12,7 @@ export const options = {
 
     // For heavy load test
     vus: 5000, 
-    iterations: 6632 
+    iterations: 100000 
 }
 
 const TEST_URL = 'http://localhost:3002/testproducts'

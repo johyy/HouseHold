@@ -30,4 +30,5 @@
 |       | 2     | Add preliminary modifyind product view |
 | 7.2.  | 1     | Create base data to databases |
 | 8.2.  | 1,5   | Add icons and possibility to delete a product |
-| =     | 66  ||
+|       | 3     | Fighting with the ModifyProcuct to get it work perfectly |
+| =     | 69  ||

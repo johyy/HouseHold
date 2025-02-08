@@ -64,21 +64,13 @@ const ProductDetails = () => {
 
       const response = await fetch(`${API_URL_PRODUCTS}/products/${id}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+        headers: { Authorization: `Bearer ${token}` },
       });
-  
       const data = await response.json();
   
-      if (response.ok) {
-        navigate('/'); 
-      } else {
-        console.error("Poistovirhe:", data.message);
-      }
+      navigate('/'); 
     } catch (error) {
-      console.error("Virhe tuotteen poistossa:", error);
+      console.error("Error with deleting a product:", error);
     }
   };
 

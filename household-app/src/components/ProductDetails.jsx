@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useParams, useNavigate } from 'react-router-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL_PRODUCTS } from '@env';
+import { Alert } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,19 +60,38 @@ const ProductDetails = () => {
   }
 
   const handleDeletion = async () => {
-    try {
-      const token = await AsyncStorage.getItem('accessToken');
-
-      const response = await fetch(`${API_URL_PRODUCTS}/products/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await response.json();
+    Alert.alert(
+      "Vahvista poisto",
+      `Haluatko varmasti poistaa tavaran "${product.name}?"`,
+      [
+        {
+          text: "Peruuta",
+          style: "cancel",
+        },
+        {
+          text: "Kyllä",
+          onPress: async () => {
+            try {
+              const token = await AsyncStorage.getItem('accessToken');
+              if (!token) return;
   
-      navigate('/'); 
-    } catch (error) {
-      console.error("Error with deleting a product:", error);
-    }
+              const response = await fetch(`${API_URL_PRODUCTS}/products/${id}`, {
+                method: 'DELETE',
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+  
+              if (!response.ok) throw new Error("Error deleting product");
+              navigate('/');
+  
+            } catch (error) {
+              console.error("Error deleting product:", error.message);
+            }
+          },
+        },
+      ]
+    );
   };
 
   return (

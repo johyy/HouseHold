@@ -31,4 +31,5 @@
 | 7.2.  | 1     | Create base data to databases |
 | 8.2.  | 1,5   | Add icons and possibility to delete a product |
 |       | 3     | Fighting with the ModifyProcuct to get it work perfectly |
-| =     | 69  ||
+|       | 0,5   | Add alert for deleting a product (cancel/confirm) |
+| =     | 69,5  ||

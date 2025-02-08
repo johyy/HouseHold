@@ -5,6 +5,8 @@ import Text from './Text';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigate, useLocation } from 'react-router-native';
 import useSignOut from '../hooks/useSignOut';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -73,15 +75,15 @@ const AppBar = () => {
       <View style={styles.buttonContainer}>
         {isSignedIn ? (
           <Pressable onPress={handleSignOut}>
-            <Text style={styles.button}>Kirjaudu ulos</Text>
+            <Icon name="logout" size={30} color="white" />
           </Pressable>
         ) : (
           <>
-            <Pressable onPress={handleSignIn}>
-              <Text style={styles.button}>Kirjaudu</Text>
+            <Pressable onPress={handleSignIn} style={{ marginRight: 30 }}>
+              <Icon name="login" size={30} color="white" />
             </Pressable>
             <Pressable onPress={handleSignUp}>
-              <Text style={styles.button}>Luo tunnus</Text>
+              <Icon name="person-add" size={30} color="white" />
             </Pressable>
           </>
         )}

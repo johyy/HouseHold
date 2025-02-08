@@ -58,6 +58,30 @@ const ProductDetails = () => {
     );
   }
 
+  const handleDeletion = async () => {
+    try {
+      const token = await AsyncStorage.getItem('accessToken');
+
+      const response = await fetch(`${API_URL_PRODUCTS}/products/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        navigate('/'); 
+      } else {
+        console.error("Poistovirhe:", data.message);
+      }
+    } catch (error) {
+      console.error("Virhe tuotteen poistossa:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
@@ -78,6 +102,9 @@ const ProductDetails = () => {
   
       <Pressable style={styles.button} onPress={() => navigate(`/modifyproduct/${product.id}`)}>
         <Text style={styles.buttonText}>Muokkaa tavaraa</Text>
+      </Pressable>
+      <Pressable style={styles.button} onPress={() => handleDeletion()}>
+        <Text style={styles.buttonText}>Poista tavara</Text>
       </Pressable>
       <Pressable style={styles.button} onPress={() => navigate('/')}>
         <Text style={styles.buttonText}>⇦ Takaisin tavaroihin</Text>

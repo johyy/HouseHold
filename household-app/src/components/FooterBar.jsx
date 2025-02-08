@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigate, useLocation } from "react-router-native";
-import Text from "./Text";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const styles = StyleSheet.create({
     container: {
@@ -50,7 +50,7 @@ const FooterBar = () => {
     return (
         <View style={styles.container}>
             <Pressable onPress={handleAddProduct}>
-                <Text style={styles.button}>Lisää tavara</Text>
+                <Icon name="playlist-add" size={30} color="white" />
             </Pressable>
         </View>
     );

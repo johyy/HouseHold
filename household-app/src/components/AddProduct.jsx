@@ -215,8 +215,11 @@ const AddProduct = () => {
           <Picker.Item label="rulla" value="rulla" />
           <Picker.Item label="litra" value="litra" />
           <Picker.Item label="kg" value="kg" />
-          <Picker.Item label="pkt" value="pkt" />
+          <Picker.Item label="paketti" value="paketti" />
           <Picker.Item label="pussi" value="pussi" />
+          <Picker.Item label="pieni" value="pieni" />
+          <Picker.Item label="keskikokoinen" value="keskikokoinen" />
+          <Picker.Item label="suuri" value="suuri" />
         </Picker>
       </View>
       <DateInput date={expirationDate} setDate={setExpirationDate} />

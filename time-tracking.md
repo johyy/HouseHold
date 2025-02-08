@@ -28,4 +28,6 @@
 |       | 5     | Add premilinary sorting orders + filtering + search |
 | 4.2.  | 2,5   | Make filtering visibility changeable |
 |       | 2     | Add preliminary modifyind product view |
-| =     | 63,5  ||
+| 7.2.  | 1     | Create base data to databases |
+| 8.2.  | 1,5   | Add icons and possibility to delete a product |
+| =     | 66  ||

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import Constants from 'expo-constants';
 import Text from './Text';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from '../hooks/useAuthStorage';
 import { useNavigate, useLocation } from 'react-router-native';
 import useSignOut from '../hooks/useSignOut';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -39,10 +39,11 @@ const AppBar = () => {
     const signOut = useSignOut();
     const navigate = useNavigate();
     const location = useLocation();
+    const authStorage = useAuthStorage();
 
     useEffect(() => {
         const checkAuth = async () => {
-            const token = await AsyncStorage.getItem('accessToken');
+            const token = await authStorage.getAccessToken();
             if (token) {
                 setIsSignedIn(true);
             } else {

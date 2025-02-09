@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Pressable, StyleSheet } from 'react-native';
 import Text from './Text';
 import { useNavigate } from 'react-router-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from '../hooks/useAuthStorage';
 import { API_URL_PRODUCTS } from '@env';
 
 const styles = StyleSheet.create({
@@ -35,11 +35,14 @@ const AddLocation = () => {
     const [locationName, setLocationName] = useState('');
     const [description, setDescription] = useState('');
     const navigate = useNavigate();
+    const authStorage = useAuthStorage();
 
     const handleAddLocation = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
-            if (!token) return;
+            const token = await authStorage.getAccessToken();
+            if (!token) {
+                return;
+            }
 
             const response = await fetch(`${API_URL_PRODUCTS}/locations`, {
                 method: 'POST',

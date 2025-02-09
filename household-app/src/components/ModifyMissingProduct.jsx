@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, Pressable } from 'react-native';
 import Text from './Text';
 import { useParams, useNavigate } from 'react-router-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from '../hooks/useAuthStorage';
 import { API_URL_PRODUCTS } from '@env';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
@@ -94,12 +94,15 @@ const ModifyMissingProduct = () => {
     });
     const [locations, setLocations] = useState([]);
     const [categories, setCategories] = useState([]);
+    const authStorage = useAuthStorage();
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const token = await AsyncStorage.getItem('accessToken');
-                if (!token) return;
+                const token = await authStorage.getAccessToken();
+                if (!token) {
+                    return;
+                }
     
                 const [locationsRes, categoriesRes] = await Promise.all([
                     fetch(`${API_URL_PRODUCTS}/locations`, { headers: { Authorization: `Bearer ${token}` } }),
@@ -147,8 +150,10 @@ const ModifyMissingProduct = () => {
 
     const handleSubmit = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
-            if (!token) return;
+            const token = await authStorage.getAccessToken();
+            if (!token) {
+                return;
+            }
   
             const updatedProduct = {
                 name: product.name,

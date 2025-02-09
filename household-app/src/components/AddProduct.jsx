@@ -3,7 +3,7 @@ import { View, TextInput, Pressable, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Text from './Text';
 import { useNavigate } from 'react-router-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from '../hooks/useAuthStorage';
 import { API_URL_PRODUCTS } from '@env';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -70,6 +70,7 @@ const AddProduct = () => {
     const [expirationDate, setExpirationDate] = useState(null);
     const [unit, setUnit] = useState('kpl');
     const navigate = useNavigate();
+    const authStorage = useAuthStorage();
 
     const DateInput = ({ date, setDate }) => {
         const [showPicker, setShowPicker] = useState(false);
@@ -105,8 +106,10 @@ const AddProduct = () => {
     
     const fetchLocationsAndCategories = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
-            if (!token) return;
+            const token = await authStorage.getAccessToken();
+            if (!token) {
+                return;
+            }
 
             const [locationResponse, categoryResponse] = await Promise.all([
                 fetch(`${API_URL_PRODUCTS}/locations`, {
@@ -139,7 +142,7 @@ const AddProduct = () => {
 
     const handleAddProduct = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
+            const token = await authStorage.getAccessToken();
             if (!token) {
                 return;
             }

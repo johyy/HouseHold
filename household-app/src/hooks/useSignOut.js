@@ -1,8 +1,10 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from './useAuthStorage';
 
 const useSignOut = () => {
+    const authStorage = useAuthStorage();
+
     const signOut = async () => {
-        await AsyncStorage.removeItem('accessToken');
+        await authStorage.removeAccessToken();
     };
 
     return signOut;

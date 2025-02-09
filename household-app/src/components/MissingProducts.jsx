@@ -69,7 +69,7 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const ProductItem = ({ item, onPress }) => {
     const isExpired = item.expiration_date && new Date(item.expiration_date) < new Date();
-  
+    
     return (
         <Pressable onPress={() => onPress(item.id)}>
             <View style={[styles.itemContainer, isExpired && styles.expiredItem]}>
@@ -79,7 +79,7 @@ const ProductItem = ({ item, onPress }) => {
     );
 };
 
-const ProductList = () => {
+const MissingProducts = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -98,13 +98,13 @@ const ProductList = () => {
         try {
             setLoading(true);
             setError(null); 
-  
+      
             const token = await AsyncStorage.getItem('accessToken');
-  
+      
             if (!token) {
                 return;
             }
-  
+    
             const response = await fetch(`${API_URL_PRODUCTS}/products`, {
                 method: 'GET',
                 headers: {
@@ -112,11 +112,11 @@ const ProductList = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-  
+    
             if (!response.ok) {
                 throw new Error('Tavaroiden haku epäonnistui.');
             }
-  
+        
             const data = await response.json();
             setProducts(data);
             setFilteredProducts(data);
@@ -131,7 +131,7 @@ const ProductList = () => {
     const fetchCategories = async () => {
         try {
             const token = await AsyncStorage.getItem('accessToken');
-  
+    
             if (!token) {
                 return;
             }
@@ -158,7 +158,7 @@ const ProductList = () => {
     const fetchLocations = async () => {
         try {
             const token = await AsyncStorage.getItem('accessToken');
-  
+        
             if (!token) {
                 return;
             }
@@ -187,13 +187,13 @@ const ProductList = () => {
         fetchCategories();
         fetchLocations();
     }, []);
-  
+    
     useEffect(() => {
         filterProducts();
     }, [searchQuery, selectedCategory, selectedLocation, products, sortBy, sortOrder])
 
     const filterProducts = () => {
-        let filtered = products.filter(product => product.quantity >= 1);
+        let filtered = products.filter(product => product.quantity == 0);
 
         if (searchQuery) {
             filtered = filtered.filter((product) => 
@@ -221,7 +221,7 @@ const ProductList = () => {
             if (valueA > valueB) {
                 return sortOrder === 'asc' ? -1 : 1;
             }
-      
+            
             if (valueA < valueB) {
                 return sortOrder === 'asc' ? 1 : -1;
             }
@@ -260,7 +260,7 @@ const ProductList = () => {
                     {filterVisible ? " ▲" : " ▼"}
                 </Text>
             </Pressable>
-  
+        
 
             {filterVisible && (
                 <View>
@@ -270,7 +270,7 @@ const ProductList = () => {
                         value={searchQuery}
                         onChangeText={setSearchQuery}
                     />
-  
+        
                     <View style={styles.pickerContainer}>
                         <Picker
                             selectedValue={selectedCategory}
@@ -282,7 +282,7 @@ const ProductList = () => {
                             ))}
                         </Picker>
                     </View>
-  
+        
                     <View style={styles.pickerContainer}>
                         <Picker
                             selectedValue={selectedLocation}
@@ -294,7 +294,7 @@ const ProductList = () => {
                             ))}
                         </Picker>
                     </View>
-  
+        
                     <View style={styles.pickerContainer}>
                         <Picker
                             selectedValue={sortBy}
@@ -305,7 +305,7 @@ const ProductList = () => {
                             <Picker.Item label="Lajittele vanhenemisen mukaan" value="expiration_date" />
                         </Picker>
                     </View>
-  
+        
                     <View style={styles.pickerContainer}>
                         <Picker
                             selectedValue={sortOrder}
@@ -317,7 +317,7 @@ const ProductList = () => {
                     </View>
                 </View>
             )}
-  
+        
             <FlatList
                 data={filteredProducts}
                 ItemSeparatorComponent={ItemSeparator}
@@ -325,14 +325,14 @@ const ProductList = () => {
                 renderItem={({ item }) => (
                     <ProductItem
                         item={item}
-                        onPress={(id) => navigate(`/product/${id}`)}
+                        onPress={(id) => navigate(`/productmissing/${id}`)}
                     />
                 )}
-                ListEmptyComponent={<Text style={styles.emptyText}>Ei vielä lisättyjä tavaroita</Text>}
+                ListEmptyComponent={<Text style={styles.emptyText}>Ei puuttuvia tavaroita</Text>}
                 contentContainerStyle={{ paddingBottom: 45 }}
             />
         </View>
     );
 }  
 
-export default ProductList;
+export default MissingProducts;

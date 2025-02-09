@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
-      },
+    },
 });
 
 const FooterBar = () => {
@@ -29,28 +29,40 @@ const FooterBar = () => {
 
     useEffect(() => {
         const checkAuth = async () => {
-          const token = await AsyncStorage.getItem('accessToken');
-          if (token) {
-            setIsSignedIn(true);
-          } else {
-            setIsSignedIn(false);
-          }
+            const token = await AsyncStorage.getItem('accessToken');
+            if (token) {
+                setIsSignedIn(true);
+            } else {
+                setIsSignedIn(false);
+            }
         };
         checkAuth();
     }, [location]);
 
-    const handleAddProduct = () => {
-        navigate('/addproduct');
+    const getIconColor = (path) => {
+        return location.pathname === path ? "lightblue" : "white";
     };
 
-    if (!isSignedIn || location.pathname === '/addproduct') {
+    if (!isSignedIn) {
         return null;
     }
-
+    
     return (
         <View style={styles.container}>
-            <Pressable onPress={handleAddProduct}>
-                <Icon name="playlist-add" size={30} color="white" />
+            <Pressable onPress={() => navigate('/')}>
+                <Icon name="list" size={30} color={getIconColor('/')} />
+            </Pressable>
+            <Pressable onPress={() => navigate('/addproduct')}>
+                <Icon name="playlist-add" size={30} color={getIconColor('/addproduct')} />
+            </Pressable>
+            <Pressable onPress={() => navigate('/missingproducts')}>
+                <Icon name="shopping-cart" size={30} color={getIconColor('/missingproducts')} />
+            </Pressable>
+            <Pressable onPress={() => navigate('/settings')}>
+                <Icon name="settings" size={30} color={getIconColor('/settings')} />
+            </Pressable>
+            <Pressable onPress={() => navigate('/userpreferences')}>
+                <Icon name="person" size={30} color={getIconColor('/userpreferences')} />
             </Pressable>
         </View>
     );

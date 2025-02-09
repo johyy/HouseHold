@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL_PRODUCTS } from '@env';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
+import { Alert } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -80,7 +81,7 @@ const DateInput = ({ date, setDate }) => {
     );
 };
 
-const ModifyProduct = () => {
+const ModifyMissingProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState({ 
@@ -172,7 +173,13 @@ const ModifyProduct = () => {
                 const errorData = await response.json();
                 throw new Error(`Päivitys epäonnistui: ${JSON.stringify(errorData)}`);
             }
-            navigate(`/product/${id}`);
+
+            if (product.quantity >= 1 ) {
+                Alert.alert("Ilmoitus", "Siirretty takaisin tavaralistaukseen");
+                navigate(`/product/${id}`);
+            } else {
+                navigate(`/productmissing/${id}`);
+            }
 
         } catch (error) {
             console.error("Error modifying product:", error.message);
@@ -247,11 +254,11 @@ const ModifyProduct = () => {
             <Pressable style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Tallenna muutokset</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => navigate(`/product/${id}`)}>
+            <Pressable style={styles.button} onPress={() => navigate(`/productmissing/${id}`)}>
                 <Text style={styles.buttonText}>Peruuta</Text>
             </Pressable>
         </View>
     );
 };
 
-export default ModifyProduct;
+export default ModifyMissingProduct;

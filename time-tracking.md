@@ -32,4 +32,6 @@
 | 8.2.  | 1,5   | Add icons and possibility to delete a product |
 |       | 3     | Fighting with the ModifyProcuct to get it work perfectly |
 |       | 0,5   | Add alert for deleting a product (cancel/confirm) |
-| =     | 69,5  ||
+| 9.2.  | 1,5   | Add bases for settings, missing products list and user preferences |
+|       | 3     | Add missing product funtionalities |
+| =     | 74    ||

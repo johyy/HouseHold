@@ -5,15 +5,15 @@ import { NativeRouter } from 'react-router-native';
 import Main from './src/components/Main';
 
 const App = () => {
-  return (
+    return (
 
-    <>
-      <NativeRouter>
-        <Main />
-      </NativeRouter>
-      <StatusBar style="auto" />
-    </>
-  );
+        <>
+            <NativeRouter>
+                <Main />
+            </NativeRouter>
+            <StatusBar style="auto" />
+        </>
+    );
 };
 
 export default App;

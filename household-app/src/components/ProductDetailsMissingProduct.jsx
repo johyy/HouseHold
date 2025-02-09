@@ -97,59 +97,10 @@ const ProductDetails = () => {
         );
     };
 
-    const handleChangeToEmpty = async () => {
-        try {
-            const token = await AsyncStorage.getItem('accessToken');
-            if (!token) return;
-
-            const updatedProduct = {
-                quantity: "0"
-            }
-
-            const response = await fetch(`${API_URL_PRODUCTS}/products/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(updatedProduct),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(`Päivitys epäonnistui: ${JSON.stringify(errorData)}`);
-            }
-
-            Alert.alert("Ilmoitus", "Tavara siirretty hankintalistalle");
-            navigate('/missingproducts');
-
-        } catch (error) {
-            console.error("Error modifying product:", error.message);
-        }  
-    }
-
-    const formatUnit = (unit, quantity) => {
-        const pluralUnits = ['rulla', 'litra', 'pussi', 'paketti'];
-        const adjectiveUnits = {
-            'pieni': 'pientä',
-            'keskikokoinen': 'keskikokoista',
-            'suuri': 'suurta'
-        };
-
-        if (adjectiveUnits[unit] && quantity > 1) {
-            return adjectiveUnits[unit];
-        }
-        if (pluralUnits.includes(unit) && quantity > 1) {
-            return `${unit}a`;
-        }
-        return unit;
-    };
-
-
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
-                {product.name} {product.quantity} {formatUnit(product.unit, product.quantity)}
+                {product.name} LOPPUNUT
             </Text>
             <Text style={styles.text}>
                 {product.description 
@@ -157,17 +108,9 @@ const ProductDetails = () => {
                     : ''}
             </Text>
             <Text style={styles.text}>Kategoria: {product.category}</Text>
-            <Text style={styles.text}>Sijainti: {product.location}</Text>
-            <Text style={styles.text}>
-                {product.expiration_date 
-                    ? `Viimeinen käyttöpäivä: ${new Date(product.expiration_date).toLocaleDateString('fi-FI')}` 
-                    : ''}
-            </Text>
+            <Text style={styles.text}>Entinen sijainti: {product.location}</Text>
   
-            <Pressable style={styles.button} onPress={() => handleChangeToEmpty()}>
-                <Text style={styles.buttonText}>Merkitse loppuneeksi</Text>
-            </Pressable>
-            <Pressable style={styles.button} onPress={() => navigate(`/modifyproduct/${product.id}`)}>
+            <Pressable style={styles.button} onPress={() => navigate(`/modifymissingproduct/${product.id}`)}>
                 <Text style={styles.buttonText}>Muokkaa tavaraa</Text>
             </Pressable>
             <Pressable style={styles.button} onPress={() => handleDeletion()}>

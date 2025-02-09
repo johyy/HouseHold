@@ -34,4 +34,5 @@
 |       | 0,5   | Add alert for deleting a product (cancel/confirm) |
 | 9.2.  | 1,5   | Add bases for settings, missing products list and user preferences |
 |       | 3     | Add missing product funtionalities |
-| =     | 74    ||
+|       | 1     | Refactoring household-app |
+| =     | 75    ||

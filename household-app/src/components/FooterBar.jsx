@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from '../hooks/useAuthStorage';
 import { useNavigate, useLocation } from "react-router-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -26,10 +26,11 @@ const FooterBar = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
+    const authStorage = useAuthStorage();
 
     useEffect(() => {
         const checkAuth = async () => {
-            const token = await AsyncStorage.getItem('accessToken');
+            const token = await authStorage.getAccessToken();
             if (token) {
                 setIsSignedIn(true);
             } else {

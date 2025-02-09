@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useParams, useNavigate } from 'react-router-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from '../hooks/useAuthStorage';
 import { API_URL_PRODUCTS } from '@env';
 import { Alert } from 'react-native';
 
@@ -33,14 +33,15 @@ const styles = StyleSheet.create({
     }
 });
 
-const ProductDetails = () => {
+const ProductDetailsMissingProducts = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const navigate = useNavigate();
+    const authStorage = useAuthStorage();
 
     useEffect(() => {
         const fetchProduct = async () => {
-            const token = await AsyncStorage.getItem('accessToken');
+            const token = await authStorage.getAccessToken();
             const response = await fetch(`${API_URL_PRODUCTS}/products/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -72,8 +73,10 @@ const ProductDetails = () => {
                     text: "Kyllä",
                     onPress: async () => {
                         try {
-                            const token = await AsyncStorage.getItem('accessToken');
-                            if (!token) return;
+                            const token = await authStorage.getAccessToken();
+                            if (!token) {
+                                return;
+                            }
   
                             const response = await fetch(`${API_URL_PRODUCTS}/products/${id}`, {
                                 method: 'DELETE',
@@ -121,4 +124,4 @@ const ProductDetails = () => {
     );
 };
 
-export default ProductDetails;
+export default ProductDetailsMissingProducts;

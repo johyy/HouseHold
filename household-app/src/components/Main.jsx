@@ -17,7 +17,7 @@ import ProductDetailsMissingProduct from './ProductDetailsMissingProduct';
 import ModifyMissingProduct from './ModifyMissingProduct';
 import Settings from './Settings';
 import theme from '../theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from '../hooks/useAuthStorage';
 import React, { useEffect, useState } from 'react';
 
 const styles = StyleSheet.create({
@@ -32,11 +32,12 @@ const Main = () => {
     const [isSignedIn, setIsSignedIn] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
+    const authStorage = useAuthStorage();
 
     useEffect(() => {
         const checkAuth = async () => {
-            const token = await AsyncStorage.getItem('accessToken');
-            setIsSignedIn(!!token);
+            const token = await authStorage.getAccessToken();
+            setIsSignedIn(token ? true : false);
 
             if (token && location.pathname === '/signin') {
                 navigate('/'); 
@@ -49,7 +50,7 @@ const Main = () => {
     }, [location]);
 
     const handleSignOut = async () => {
-        await AsyncStorage.removeItem('accessToken');
+        await authStorage.removeAccessToken();
         setIsSignedIn(false);
         navigate('/signin');
     };

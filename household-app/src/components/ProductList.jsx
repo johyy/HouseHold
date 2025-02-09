@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, View, StyleSheet, Pressable, TextInput } from 'react-native';
 import Text from './Text';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from '../hooks/useAuthStorage';
 import { useNavigate } from 'react-router-native';
 import { API_URL_PRODUCTS } from '@env';
 import { Picker } from '@react-native-picker/picker';
@@ -93,14 +93,14 @@ const ProductList = () => {
     const [sortOrder, setSortOrder] = useState('asc');
     const [filterVisible, setFilterVisible] = useState(false);
     const navigate = useNavigate();
+    const authStorage = useAuthStorage();
 
     const fetchProducts = async () => {
         try {
             setLoading(true);
             setError(null); 
   
-            const token = await AsyncStorage.getItem('accessToken');
-  
+            const token = await authStorage.getAccessToken();
             if (!token) {
                 return;
             }
@@ -130,8 +130,7 @@ const ProductList = () => {
 
     const fetchCategories = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
-  
+            const token = await authStorage.getAccessToken();
             if (!token) {
                 return;
             }
@@ -157,8 +156,7 @@ const ProductList = () => {
 
     const fetchLocations = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
-  
+            const token = await authStorage.getAccessToken();
             if (!token) {
                 return;
             }

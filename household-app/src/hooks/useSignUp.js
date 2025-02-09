@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAuthStorage from './useAuthStorage';
 import { API_URL_USERS } from '@env';
 
 const useSignUp = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const authStorage = useAuthStorage();
 
     const signUp = async ({ name, username, password }) => {
         try {
@@ -23,7 +24,7 @@ const useSignUp = () => {
             }
 
             const { token } = await response.json();
-            await AsyncStorage.setItem('accessToken', token);
+            await authStorage.setAccessToken(token);
 
             return token;
         } catch (e) {

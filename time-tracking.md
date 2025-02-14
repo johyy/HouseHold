@@ -36,4 +36,5 @@
 |       | 3     | Add missing product funtionalities |
 |       | 2     | Refactoring household-app |
 |       | 1     | Implementing AuthStorage |
-| =     | 77    ||
+| 14.2. | 0,5   | Add coloring for expired text |
+| =     | 77,5    ||

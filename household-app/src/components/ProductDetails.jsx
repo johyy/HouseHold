@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
+import Text from './Text';
 import { useParams, useNavigate } from 'react-router-native';
 import useAuthStorage from '../hooks/useAuthStorage';
 import { API_URL_PRODUCTS } from '@env';
@@ -150,6 +151,7 @@ const ProductDetails = () => {
         return unit;
     };
 
+    const isExpired = product.expiration_date && new Date(product.expiration_date) < new Date();
 
     return (
         <View style={styles.container}>
@@ -163,7 +165,7 @@ const ProductDetails = () => {
             </Text>
             <Text style={styles.text}>Kategoria: {product.category}</Text>
             <Text style={styles.text}>Sijainti: {product.location}</Text>
-            <Text style={styles.text}>
+            <Text color={isExpired ? 'danger' : 'textPrimary'} style={styles.text}>
                 {product.expiration_date 
                     ? `Viimeinen käyttöpäivä: ${new Date(product.expiration_date).toLocaleDateString('fi-FI')}` 
                     : ''}

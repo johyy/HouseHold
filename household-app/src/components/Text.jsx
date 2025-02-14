@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     colorPrimary: {
         color: theme.colors.primary,
     },
+    colorDanger: {
+        color: theme.colors.danger,
+    },
     fontSizeSubheading: {
         fontSize: theme.fontSizes.subheading,
     },
@@ -28,6 +31,7 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
         styles.text,
         color === 'textSecondary' && styles.colorTextSecondary,
         color === 'primary' && styles.colorPrimary,
+        color === 'danger' && styles.colorDanger,
         fontSize === 'subheading' && styles.fontSizeSubheading,
         fontWeight === 'bold' && styles.fontWeightBold,
         style,
@@ -35,5 +39,6 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
 
     return <NativeText style={textStyle} {...props} />;
 };
+
 
 export default Text;

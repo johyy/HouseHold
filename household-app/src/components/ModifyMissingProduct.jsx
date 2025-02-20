@@ -119,7 +119,9 @@ const ModifyMissingProduct = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 });
     
-                if (!response.ok) throw new Error("Virhe tuotteen haussa");
+                if (!response.ok) {
+                    throw new Error("Virhe tuotteen haussa");
+                }
     
                 const data = await response.json();
     

@@ -102,4 +102,17 @@ router.delete('/:id', verifyToken, async (req, res) => {
   }
 })
 
+router.get('/me', verifyToken, async (req, res) => {
+  try {
+    const userId = req.user_id
+    const query = `SELECT id, name, username FROM users WHERE id = $1`
+    const values = [userId]
+    const result = await postgresPool.query(query, values)
+    
+    res.json(result.rows[0])
+  } catch (error) {
+      res.status(500).json({ error: error.message })
+  }
+})
+
 module.exports = router

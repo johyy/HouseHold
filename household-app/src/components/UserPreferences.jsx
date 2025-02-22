@@ -76,6 +76,11 @@ const UserPreferences = () => {
                 const response = await fetch(`${API_URL_USERS}/preferences`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
+
+                if (response.status === 404) { 
+                    setPreferences(null);
+                    return;
+                }
     
                 if (!response.ok) {
                     throw new Error('Preferences fetch failed');
@@ -111,7 +116,7 @@ const UserPreferences = () => {
             <View style={styles.container}>
                 <Text style={styles.title}>{user.name}</Text>
                 <Text style={styles.text}>Sinulla ei ole vielä asetettuja preferenssejä</Text>
-                <Pressable style={styles.button} onPress={() => navigate(`/addpreferences/${user.id}`)}>
+                <Pressable style={styles.button} onPress={() => navigate(`/addpreferences`)}>
                     <Text style={styles.buttonText}>Aseta preferenssit</Text>
                 </Pressable>
             </View>
@@ -125,7 +130,7 @@ const UserPreferences = () => {
             <Text style={styles.text}>Kosmetiikkamieltymykset: {preferences?.cosmetic_preferences || 'Ei määritelty'}</Text>
             <Text style={styles.text}>Muistiinpanot: {preferences?.notes || 'Ei muistiinpanoja'}</Text>
 
-            <Pressable style={styles.button} onPress={() => navigate(`/modifypreferences/${preferences.id}`)}>
+            <Pressable style={styles.button} onPress={() => navigate(`/modifypreferences`)}>
                 <Text style={styles.buttonText}>Muokkaa preferenssejä</Text>
             </Pressable>
         </View>

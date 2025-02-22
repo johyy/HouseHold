@@ -9,9 +9,7 @@ const styles = StyleSheet.create({
     container: {
         padding: 15,
         backgroundColor: 'white',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        flex: 1
     },
     deleteButton: {
         backgroundColor: 'red',

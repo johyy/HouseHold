@@ -38,4 +38,5 @@
 |       | 1     | Implementing AuthStorage |
 | 14.2. | 0,5   | Add coloring for expired text |
 | 20.2. | 1,5   | Add posibility to mark product as purchased with the amount |
-| =     | 79    ||
+| 21.2  | 3     | Add User prefernces view and possibility to add them |
+| =     | 82    ||

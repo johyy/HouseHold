@@ -16,6 +16,7 @@ import MissingProducts from './MissingProducts';
 import ProductDetailsMissingProduct from './ProductDetailsMissingProduct';
 import ModifyMissingProduct from './ModifyMissingProduct';
 import Settings from './Settings';
+import AddPreferences from './AddPreferences';
 import theme from '../theme';
 import useAuthStorage from '../hooks/useAuthStorage';
 import React, { useEffect, useState } from 'react';
@@ -114,6 +115,10 @@ const Main = () => {
                 <Route
                     path="/modifymissingproduct/:id"
                     element={isSignedIn ? <ModifyMissingProduct /> : <Navigate to="/singin" replace />}
+                />
+                <Route
+                    path="/addpreferences/:id"
+                    element={isSignedIn ? <AddPreferences /> : <Navigate to="/singin" replace />}
                 />
                 <Route
                     path="*"

@@ -41,4 +41,5 @@
 | 21.2  | 3     | Add User preferences view and possibility to add them |
 | 22.2. | 1,5   | Add modifying preferences |
 |       | 0,5   | Add deleting a user |
-| =     | 84    ||
+|       | 0,5   | Error message for non-existing user/wrong password at login |
+| =     | 84,5    ||

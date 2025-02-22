@@ -45,7 +45,7 @@ const validationSchema = yup.object().shape({
     password: yup.string().required('Salasana tarvitaan'),
 });
 
-const SignInForm = ({ onSubmit, isLoading }) => {
+const SignInForm = ({ onSubmit, isLoading, errorMessage }) => {
     const formik = useFormik({
         initialValues: { username: '', password: '' },
         validationSchema,
@@ -75,6 +75,8 @@ const SignInForm = ({ onSubmit, isLoading }) => {
             {formik.touched.password && formik.errors.password && (
                 <Text style={styles.errorText}>{formik.errors.password}</Text>
             )}
+
+            {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
             <Pressable
                 style={[styles.button, isLoading && { backgroundColor: '#ccc' }]}
                 onPress={formik.handleSubmit}
@@ -96,20 +98,23 @@ const SignIn = () => {
     const { signIn } = useSignIn();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const onSubmit = async (values) => {
         try {
             setLoading(true);
+            setErrorMessage('')
             await signIn(values);
             navigate('/');
         } catch (error) {
             console.log('Logging in failed:', error.message);
+            setErrorMessage('Virheellinen käyttäjätunnus tai salasana');
         } finally {
             setLoading(false);
         }
     };
 
-    return <SignInForm onSubmit={onSubmit} isLoading={loading} />;
+    return <SignInForm onSubmit={onSubmit} isLoading={loading} errorMessage={errorMessage} />;
 };
 
 export default SignIn;

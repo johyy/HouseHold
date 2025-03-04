@@ -5,7 +5,7 @@ const { postgresPool } = require("../config/databases")
 router.get("/", async (req, res) => {
     try {
         const result = await postgresPool.query("SELECT * FROM testUsers")
-        res.json(result.rows)
+        res.json(result.rows) 
     } catch (error) {
         console.error(
             "Error fetching test users from PostgreSQL:",

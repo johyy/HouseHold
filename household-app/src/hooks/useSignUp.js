@@ -5,7 +5,7 @@ import { API_URL_USERS } from "@env";
 const useSignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const authStorage = useAuthStorage();
+  const authStorage = useAuthStorage(); 
 
   const signUp = async ({ name, username, password }) => {
     try {

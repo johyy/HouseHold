@@ -42,4 +42,5 @@
 | 22.2. | 1,5   | Add modifying preferences |
 |       | 0,5   | Add deleting a user |
 |       | 0,5   | Error message for non-existing user/wrong password at login |
-| =     | 84,5    ||
+|       | 4     | Refactoring and fine tuning |
+| =     | 88,5    ||

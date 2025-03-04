@@ -9,10 +9,10 @@ export const options = {
             // vus: 10,   // Light load test DONE
             // iterations: 1000, // Light load test DONE
 
-            vus: 100,   // Average load test 
-            iterations: 10000, // Average load test 
-            maxDuration: '30m', // Average load test 
-            gracefulStop: '60s', // Average load test 
+            // vus: 100,   // Average load test DONE 
+            // iterations: 10000, // Average load test DONE
+            // maxDuration: '30m', // Average load test DONE
+            // gracefulStop: '60s', // Average load test DONE 
             exec: 'postProducts', 
         },
         get_products: {
@@ -20,10 +20,10 @@ export const options = {
             // vus: 10,   // Light load test DONE
             // iterations: 1000, // Light load test DONE
 
-            vus: 100,   // Average load test 
-            iterations: 10000, // Average load test 
-            maxDuration: '30m', // Average load test 
-            gracefulStop: '60s', // Average load test 
+            // vus: 100,   // Average load test DONE 
+            // iterations: 10000, // Average load test DONE 
+            // maxDuration: '30m', // Average load test DONE 
+            // gracefulStop: '60s', // Average load test DONE 
             exec: 'getProducts', 
         },
     },

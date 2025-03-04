@@ -14,10 +14,10 @@ export const options = {
             // maxDuration: '30m', // Average load test DONE
             // gracefulStop: '60s', // Average load test DONE
 
-            vus: 1000,   // Heavy load test
-            iterations: 100000, // Heavy load test
-            maxDuration: '120m', // Heavy load test
-            gracefulStop: '60s', // Heavy load test
+            // vus: 1000,   // Heavy load test DONE
+            // iterations: 100000, // Heavy load test DONE
+            // maxDuration: '120m', // Heavy load test DONE
+            // gracefulStop: '60s', // Heavy load test DONE
             exec: 'postProducts',
         },
         get_products: {
@@ -30,10 +30,10 @@ export const options = {
             // maxDuration: '30m', // Average load test DONE
             // gracefulStop: '60s', // Average load test DONE
 
-            vus: 1000,   // Heavy load test
-            iterations: 100000, // Heavy load test
-            maxDuration: '120m', // Heavy load test
-            gracefulStop: '60s', // Heavy load test
+            // vus: 1000,   // Heavy load test DONE
+            // iterations: 100000, // Heavy load test DONE
+            // maxDuration: '120m', // Heavy load test DONE
+            // gracefulStop: '60s', // Heavy load test DONE
             exec: 'getProducts',
         },
     },

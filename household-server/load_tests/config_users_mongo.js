@@ -7,12 +7,12 @@ export const options = {
     // iterations: 1000 DONE
 
     // For average load test
-    vus: 500, 
-    iterations: 10000, 
+    // vus: 500, 
+    // iterations: 10000, 
 
     // For heavy load test
-    // vus: 5000, 
-    // iterations: 100000 
+    // vus: 5000, DONE
+    // iterations: 100000 DONE
 }
 
 const TEST_URL = 'http://localhost:3001/testusers/mongo'

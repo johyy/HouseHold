@@ -1,13 +1,13 @@
-import useAuthStorage from './useAuthStorage';
+import useAuthStorage from "./useAuthStorage";
 
 const useSignOut = () => {
-    const authStorage = useAuthStorage();
+  const authStorage = useAuthStorage();
 
-    const signOut = async () => {
-        await authStorage.removeAccessToken();
-    };
+  const signOut = async () => {
+    await authStorage.removeAccessToken();
+  };
 
-    return signOut;
+  return signOut;
 };
 
 export default useSignOut;

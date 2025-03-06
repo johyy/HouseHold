@@ -1,6 +1,12 @@
-# HouseHold
+# HouseHold - Home Inventory Management
 
-## Microservices
+HouseHold is a home inventory management system built as a **Full Stack Open** project at the University of Helsinki.  
+The backend architecture follows a microservices approach and incorporates CQRS (Command Query Responsibility Segregation) pattern,  
+developed as part of the Software Architecture Project course at the University of Helsinki.
+
+**[Read the full User Guide](user_guide.md)** 
+
+## Microservices Overview
 
 ### User Service
 - **Description:** The User Service manages all user-related data, including accounts, authentication, and user preferences.

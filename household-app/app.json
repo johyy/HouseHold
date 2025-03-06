@@ -11,12 +11,28 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.johyy.householdapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.johyy.householdapp"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f63f8065-99e1-425d-a489-cd9a294710d2"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f63f8065-99e1-425d-a489-cd9a294710d2"
     }
   }
 }

@@ -42,5 +42,7 @@
 | 22.2. | 1,5   | Add modifying preferences |
 |       | 0,5   | Add deleting a user |
 |       | 0,5   | Error message for non-existing user/wrong password at login |
-|       | 4     | Refactoring and fine tuning |
-| =     | 88,5    ||
+| 4.3.  | 4     | Refactoring and fine tuning |
+| 5.3   | 1     | Trying to publish the app |
+| 6.3.  | 0,5   | Succeeded with publishing |
+| =     | 90    ||

@@ -45,4 +45,5 @@
 | 4.3.  | 4     | Refactoring and fine tuning |
 | 5.3   | 1     | Trying to publish the app |
 | 6.3.  | 0,5   | Succeeded with publishing |
-| =     | 90    ||
+|       | 1,5   | Add user guide |
+| =     | 91,5    ||

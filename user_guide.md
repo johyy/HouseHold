@@ -14,11 +14,11 @@ Create an account with your name, username and a password that has a minimum of 
 
 ---
 
-## Product List
+# Product List
 
 Once you have logged in, the home screen will display a list of all the products in your household inventory.
 
-![Product List](images/productlist.jpg)
+<img src="images/productlist.jpg" alt="Product List" width="300"/>
 
 You can scroll through the products and tap an producr to see its details.
 
@@ -28,7 +28,7 @@ You can scroll through the products and tap an producr to see its details.
 
 To filter or search for specific items, tap on "Muokkaa hakuehtoja" (Modify search options).
 
-![Filter Options](images/filter.jpg)
+<img src="images/filter.jpg" alt="Filter Options" width="300"/>
 
 Here you can search by product name, filter by category, location, or expiration date and sort the list in ascending or descending order.
 
@@ -38,7 +38,7 @@ Here you can search by product name, filter by category, location, or expiration
 
 To add a new product, tap the plus (+) button at the bottom. 
 
-![Add Product](images/addproduct.jpg)
+<img src="images/addproduct.jpg" alt="Add Product" width="300"/>
 
 Enter the product name and description, and set the quantity and unit.
 Select a storage location and category, or create new locations and categories, that are only visible to your user. 
@@ -50,11 +50,11 @@ Optionally, you can also set an expiration date.
 
 Tap on a product to view its details. 
 
-![Expired Product](images/productexpired.jpg)
+<img src="images/productexpired.jpg" alt="Expired Product" width="300"/>
 
 Expired products are marked with red in the production list, and the expiration date is colored red at the product details view.
 
-![Product Details](images/product.jpg)
+<img src="images/product.jpg" alt="Product Details" width="300"/>
 
 You can edit products details with "Muokkaa tavaraa", mark the product as finished with "Merkitse loppuneeksi", and remove the product with "Poista tavara".
 
@@ -64,12 +64,12 @@ You can edit products details with "Muokkaa tavaraa", mark the product as finish
 
 If you select "Merkitse loppuneeksi" (Mark as finished) at the details view of the product, the product will be moved to missing products list. 
 
-![Missing Product List](images/missinproductlist.jpg)
+<img src="images/missinproductlist.jpg" alt="Missing Product List" width="300"/>
 
 Here the search and filtering options are availabe as well. 
 When you click the product you can mark it as purchased with "Merkitse ostetuksi", select the amount, and the product will go back to products list.
 
-![Mark Missing Product](images/missinproduct.jpg)
+<img src="images/missinproduct.jpg" alt="Mark Missing Product" width="300"/>
 
 You can also edit products details with "Muokkaa tavaraa" and remove the product with "Poista tavara".
 
@@ -79,7 +79,7 @@ You can also edit products details with "Muokkaa tavaraa" and remove the product
 
 In the settings menu, you can delete your account if needed.
 
-![Settings](images/settings.jpg)
+<img src="images/settings.jpg" alt="Settings" width="300"/>
 
 Be careful, this action is irreversible.
 
@@ -89,6 +89,6 @@ Be careful, this action is irreversible.
 
 In user preferences view, you can customize your preferences such as clothing sizes and cosmetic preferences.
 
-![Preferences](images/preferences.jpg)
+<img src="images/preferences.jpg" alt="Preferences" width="300"/>
 
 This is helpful when shopping for specific products.
